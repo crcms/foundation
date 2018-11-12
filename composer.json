@@ -1,0 +1,54 @@
+{
+  "name": "crcms/foundation",
+  "description": "The CrCms Foundation Structure.",
+  "keywords": [
+    "task",
+    "handle",
+    "resource",
+    "model",
+    "repository",
+    "transporter",
+    "foundation",
+    "crcms",
+    "laravel"
+  ],
+  "homepage": "http://blog.crcms.cn",
+  "support": {
+    "issues": "https://github.com/crcms/foundation/issues",
+    "source": "https://github.com/crcms/foundation"
+  },
+  "authors": [
+    {
+      "name": "simon",
+      "email": "simon@crcms.cn"
+    }
+  ],
+  "license": "MIT",
+  "type": "library",
+  "require": {
+    "php": "^7.2.4",
+    "illuminate/support": "^5.7"
+  },
+  "require-dev": {
+  },
+  "autoload": {
+    "classmap": [
+    ],
+    "psr-4": {
+      "CrCms\\Foundation\\": "src/"
+    },
+    "files": [
+      "src/Helpers/helpers.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "CrCms\\Foundation\\Tests\\": "tests/"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
