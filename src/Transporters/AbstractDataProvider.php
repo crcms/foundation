@@ -32,11 +32,23 @@ abstract class AbstractDataProvider implements DataProviderContract, ArrayAccess
 
     /**
      * AbstractDataProvider constructor.
-     * @param $object
+     * @param null $object
      */
-    public function __construct($object)
+    public function __construct($object = null)
+    {
+        if (!is_null($object)) {
+            $this->setObject($object);
+        }
+    }
+
+    /**
+     * @param $object
+     * @return AbstractDataProvider
+     */
+    public function setObject($object): self
     {
         $this->data = $this->resolveData($object);
+        return $this;
     }
 
     /**
