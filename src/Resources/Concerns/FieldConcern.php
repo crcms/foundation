@@ -9,7 +9,7 @@
 
 namespace CrCms\Foundation\Resources\Concerns;
 
-use CrCms\Foundation\Http\Resources\Resource;
+use CrCms\Foundation\Resources\Resource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 

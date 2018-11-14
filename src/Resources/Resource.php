@@ -1,6 +1,6 @@
 <?php
 
-namespace CrCms\Foundation\Http\Resources;
+namespace CrCms\Foundation\Resources;
 
 use CrCms\Foundation\Resources\Concerns\FieldConcern;
 use CrCms\Foundation\Resources\Concerns\IncludeConcern;
