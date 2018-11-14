@@ -31,6 +31,11 @@ abstract class AbstractDataProvider implements DataProviderContract, ArrayAccess
     protected $data = [];
 
     /**
+     * @var mixed
+     */
+    protected $source;
+
+    /**
      * AbstractDataProvider constructor.
      * @param null $object
      */
@@ -47,6 +52,7 @@ abstract class AbstractDataProvider implements DataProviderContract, ArrayAccess
      */
     public function setObject($object): self
     {
+        $this->source = $object;
         $this->data = $this->resolveData($object);
         return $this;
     }
