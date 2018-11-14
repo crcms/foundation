@@ -2,9 +2,9 @@
 
 namespace CrCms\Foundation\Services;
 
-use CrCms\Foundation\Http\Resources\ResourceCollection;
+use CrCms\Foundation\Resources\ResourceCollection;
 use Illuminate\Http\JsonResponse;
-use CrCms\Foundation\Http\Resources\Resource;
+use CrCms\Foundation\Resources\Resource;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
