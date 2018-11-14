@@ -9,14 +9,11 @@
 
 namespace CrCms\Foundation\Transporters;
 
-use Illuminate\Contracts\Validation\ValidatesWhenResolved;
-use Illuminate\Validation\ValidatesWhenResolvedTrait;
-
 /**
  * Class DataProvider
  * @package CrCms\Foundation\Transporters
  */
-class DataProvider extends AbstractDataProvider// implements ValidatesWhenResolved
+class DataProvider extends AbstractDataProvider
 {
-    //use ValidatesWhenResolvedTrait;
+
 }
