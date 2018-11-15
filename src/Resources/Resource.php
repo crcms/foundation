@@ -42,7 +42,7 @@ class Resource extends BaseResource
      * @param Request $request
      * @return array
      */
-    protected function mergeIncludeData(Request $request): array
+    protected function mergeIncludeData($request): array
     {
         $includes = $this->includes($request);
 
