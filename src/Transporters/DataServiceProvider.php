@@ -30,11 +30,10 @@ class DataServiceProvider extends ServiceProvider
             $resolved->validateResolved();
         });
 
-        $this->app->resolving(DataProviderContract::class, function (DataProviderContract $dataProvider, $app) {
+        $this->app->resolving(AbstractValidateDataProvider::class, function (AbstractValidateDataProvider $dataProvider, $app) {
             $dataProvider->setObject($app['request']->all());
         });
     }
-
 
     /**
      * Register any application services.
@@ -43,6 +42,8 @@ class DataServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
+        $this->app->bind(DataProviderContract::class, function ($app) {
+            return new DataProvider($app['request']->all());
+        });
     }
 }
