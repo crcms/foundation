@@ -20,6 +20,11 @@ use Illuminate\Support\ServiceProvider;
 class DataServiceProvider extends ServiceProvider
 {
     /**
+     * @var bool
+     */
+    protected $defer = true;
+
+    /**
      * Bootstrap any application services.
      *
      * @return void
@@ -42,8 +47,38 @@ class DataServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(DataProviderContract::class, function ($app) {
+        $this->registerAlias();
+        $this->registerServices();
+    }
+
+    /**
+     * @return void
+     */
+    protected function registerServices(): void
+    {
+        $this->app->bind('data.provider', function ($app) {
             return new DataProvider($app['request']->all());
         });
+    }
+
+    /**
+     * @return void
+     */
+    protected function registerAlias(): void
+    {
+        foreach ([
+                     DataProviderContract::class,
+                     AbstractDataProvider::class,
+                 ] as $alias) {
+            $this->app->alias('data.provider', $alias);
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function provides(): array
+    {
+        return ['data.provider'];
     }
 }
