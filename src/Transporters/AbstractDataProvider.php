@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use DomainException;
 use Illuminate\Support\Arr;
 use ArrayAccess;
+use Illuminate\Support\Collection;
 
 /**
  * Class AbstractDataProvider
@@ -191,9 +192,7 @@ abstract class AbstractDataProvider implements DataProviderContract, ArrayAccess
      */
     protected function resolveData($object)
     {
-        if ($object instanceof Request) {
-            return array_merge($object->route()->parameters(), $object->all());
-        } elseif ($object instanceof Arrayable) {
+        if ($object instanceof Arrayable || $object instanceof Collection) {
             return $object->toArray();
         } elseif (is_array($object)) {
             return $object;
