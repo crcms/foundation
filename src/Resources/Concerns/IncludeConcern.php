@@ -88,7 +88,7 @@ trait IncludeConcern
      * @param Request $request
      * @return array
      */
-    public function includes(Request $request): array
+    public function includes($request): array
     {
         $includes = array_merge($this->parseIncludeParams($request), $this->includes);
 
@@ -104,7 +104,7 @@ trait IncludeConcern
      * @param Request $request
      * @return array
      */
-    protected function parseIncludeParams(Request $request): array
+    protected function parseIncludeParams($request): array
     {
         $includes = $request->input($this->includeRequestKey, []);
         return is_array($includes) ? $includes : explode(',', $includes);
@@ -115,7 +115,7 @@ trait IncludeConcern
      * @param Request $request
      * @return array
      */
-    protected function execIncludes(array $includes, Request $request): array
+    protected function execIncludes(array $includes, $request): array
     {
         return (new Collection($includes))->map(function ($include) {
             return [
@@ -135,7 +135,7 @@ trait IncludeConcern
      * @param $resource
      * @return mixed
      */
-    protected function resolveIncludeResource(Request $request, $resource)
+    protected function resolveIncludeResource($request, $resource)
     {
         if ($resource instanceof Resource) {
             $resource = $resource->resolve($request);
