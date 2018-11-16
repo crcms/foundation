@@ -17,12 +17,14 @@ use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Auth\Factory as AuthFactory;
 use Illuminate\Contracts\Bus\Dispatcher;
+use Illuminate\Events\Dispatcher as EventDispatcher;
 use InvalidArgumentException;
 
 /**
  * @property-read Container|Application $app
  * @property-read Config $config
  * @property-read Cache $cache
+ * @property-read EventDispatcher $event
  * @property-read AuthFactory $auth
  * @property-read Dispatcher $dispatcher
  * @property-read Guard $guard
@@ -65,6 +67,14 @@ trait InstanceConcern
     public function auth(): AuthFactory
     {
         return $this->app->make(AuthFactory::class);
+    }
+
+    /**
+     * @return EventDispatcher
+     */
+    public function event(): EventDispatcher
+    {
+        return $this->app->make('events');
     }
 
     /**
