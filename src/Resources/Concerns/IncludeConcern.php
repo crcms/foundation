@@ -29,6 +29,11 @@ trait IncludeConcern
     protected $includes = [];
 
     /**
+     * @var array
+     */
+    protected $parseIncludes = [];
+
+    /**
      * @var string
      */
     protected $includeRequestKey = 'includes';
@@ -112,21 +117,41 @@ trait IncludeConcern
 
     /**
      * @param array $includes
+     * @param $request
+     * @return Collection
+     */
+    protected function parseIncludes(array $includes, $request): Collection
+    {
+        $diffIncludes = array_diff_key($includes, $this->parseIncludes);
+
+        if (!empty($diffIncludes)) {
+            $diffIncludes = (new Collection($diffIncludes))->map(function ($include) {
+                return [
+                    'key' => $include,
+                    'method' => Str::camel("include-{$include}"),
+                ];
+            })->filter(function ($include) {
+                return method_exists($this, $include['method']);
+            })->mapWithKeys(function ($include) use ($request) {
+                $resource = call_user_func([$this, $include['method']], $request);
+                return [$include['key'] => $resource];
+            })->all();
+
+            $this->parseIncludes = array_merge($diffIncludes, $this->parseIncludes);
+        }
+
+        return Collection::make(Arr::only($this->parseIncludes, $includes));
+    }
+
+    /**
+     * @param array $includes
      * @param Request $request
      * @return array
      */
     protected function execIncludes(array $includes, $request): array
     {
-        return (new Collection($includes))->map(function ($include) {
-            return [
-                'key' => $include,
-                'method' => Str::camel("include-{$include}"),
-            ];
-        })->filter(function ($include) {
-            return method_exists($this, $include['method']);
-        })->mapWithKeys(function ($include) use ($request) {
-            $resource = call_user_func([$this, $include['method']], $request);
-            return [$include['key'] => $this->resolveIncludeResource($request, $resource)];
+        return $this->parseIncludes($includes, $request)->mapWithKeys(function ($item) use ($request) {
+            return $this->resolveIncludeResource($request, $item);
         })->all();
     }
 
