@@ -10,6 +10,7 @@
 namespace CrCms\Foundation\Resources\Concerns;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\Resource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Pagination\AbstractPaginator;
@@ -162,6 +163,10 @@ trait IncludeConcern
      */
     protected function resolveIncludeResource($request, $resource)
     {
-        return $resource->toResponse($request)->getData();
+        if ($resource instanceof JsonResource) {
+            return $resource->toResponse($request)->getData();
+        } else {
+            return $resource;
+        }
     }
 }
