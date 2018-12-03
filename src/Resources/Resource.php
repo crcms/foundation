@@ -46,6 +46,7 @@ class Resource extends BaseResource
     {
         $includes = $this->includes($request);
 
+        //合并includes到字段的过滤
         if ($this->resourceFields && $includes) {
             $func = $this->resourceType === 'only' ? 'array_intersect' : 'array_diff';
             $includes = call_user_func($func, $includes, $this->resourceFields);
