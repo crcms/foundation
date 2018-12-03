@@ -150,7 +150,7 @@ trait IncludeConcern
      */
     protected function execIncludes(array $includes, $request): array
     {
-        return $this->parseIncludes($includes, $request)->mapWithKeys(function ($item) use ($request) {
+        return $this->parseIncludes($includes, $request)->map(function ($item) use ($request) {
             return $this->resolveIncludeResource($request, $item);
         })->all();
     }
