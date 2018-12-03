@@ -163,10 +163,14 @@ trait IncludeConcern
      */
     protected function resolveIncludeResource($request, $resource)
     {
-        if ($resource instanceof JsonResource) {
-            return $resource->toResponse($request)->getData();
-        } else {
-            return $resource;
+        if ($resource instanceof Resource) {
+            $resource = $resource->resolve($request);
+        } elseif ($resource instanceof ResourceCollection) {
+            $resource = $resource->resource instanceof AbstractPaginator ?
+                Arr::only($resource->toResponse($request)->getData(true), [$resource::$wrap, 'links', 'meta']) :
+                $resource->resolve($request);
         }
+
+        return $resource;
     }
 }
