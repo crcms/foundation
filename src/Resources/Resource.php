@@ -53,8 +53,8 @@ class Resource extends BaseResource
         }
 
         return array_merge(
-            $this->execIncludes($includes, $request),
-            $this->toArray($request)
+            $this->toArray($request),
+            $this->execIncludes($includes, $request)
         );
     }
 

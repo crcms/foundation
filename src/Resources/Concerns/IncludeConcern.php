@@ -52,7 +52,7 @@ trait IncludeConcern
 
     /**
      * @param string $include
-     * @return IncludeTrait
+     * @return IncludeConcern
      */
     public function addInclude(string $include): self
     {
@@ -65,7 +65,7 @@ trait IncludeConcern
 
     /**
      * @param string $include
-     * @return IncludeTrait
+     * @return IncludeConcern
      */
     public function removeInclude(string $include): self
     {
@@ -79,7 +79,7 @@ trait IncludeConcern
 
     /**
      * @param array $includes
-     * @return IncludeTrait
+     * @return IncludeConcern
      */
     public function removeIncludes(array $includes): self
     {
@@ -124,9 +124,9 @@ trait IncludeConcern
     protected function parseIncludes(array $includes, $request): Collection
     {
         $diffIncludes = array_diff_key($includes, $this->parseIncludes);
-
+        
         if (!empty($diffIncludes)) {
-            $diffIncludes = (new Collection($diffIncludes))->map(function ($include) {
+            $diffIncludes = Collection::make($diffIncludes)->map(function ($include) {
                 return [
                     'key' => $include,
                     'method' => Str::camel("include-{$include}"),
