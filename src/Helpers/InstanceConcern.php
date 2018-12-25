@@ -86,12 +86,14 @@ trait InstanceConcern
     }
 
     /**
-     * @param string $guard
+     * @param string|null $guard
      * @return Guard
      */
-    public function guard(): Guard
+    public function guard($guard = null): Guard
     {
-        return $this->auth->guard($this->config->get('auth.defaults.guard'));
+        $guard = is_null($guard) ? $this->config->get('auth.defaults.guard') : $guard;
+
+        return $this->auth->guard($guard);
     }
 
     /**
