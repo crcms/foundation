@@ -1,13 +1,12 @@
 <?php
 
-namespace CrCms\Foundation;
+namespace CrCms\Foundation\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use CrCms\Microservice\Foundation\Application as CrCmsMicroSerivceApplication;
 
 /**
  * Class ModuleServiceProvider
- * @package CrCms\Framework\App\Providers
  */
 abstract class ModuleServiceProvider extends ServiceProvider
 {
@@ -28,12 +27,12 @@ abstract class ModuleServiceProvider extends ServiceProvider
     {
         $this->map();
 
-        if (file_exists($this->basePath . 'database/migrations')) {
-            $this->loadMigrationsFrom($this->basePath . 'database/migrations');
+        if (file_exists($this->basePath.'database/migrations')) {
+            $this->loadMigrationsFrom($this->basePath.'database/migrations');
         }
 
-        if (file_exists($this->basePath . 'resources/lang')) {
-            $this->loadTranslationsFrom($this->basePath . 'resources/lang', $this->name);
+        if (file_exists($this->basePath.'resources/lang')) {
+            $this->loadTranslationsFrom($this->basePath.'resources/lang', $this->name);
         }
     }
 
@@ -52,9 +51,10 @@ abstract class ModuleServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->mergeConfigFrom(
-            $this->basePath . "config/config.php", $this->name
-        );
+        $configPath = $this->basePath."config/config.php";
+        if (file_exists($configPath)) {
+            $this->mergeConfigFrom($configPath, $this->name);
+        }
     }
 
     /**
@@ -66,7 +66,7 @@ abstract class ModuleServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes(): void
     {
-        $file = $this->basePath . 'routes/web.php';
+        $file = $this->basePath.'routes/web.php';
 
         if (file_exists($file)) {
             $this->loadRoutesFrom($file);
@@ -82,7 +82,7 @@ abstract class ModuleServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes(): void
     {
-        $file = $this->basePath . 'routes/api.php';
+        $file = $this->basePath.'routes/api.php';
 
         if (file_exists($file)) {
             $this->loadRoutesFrom(
