@@ -2,7 +2,7 @@
 
 namespace CrCms\Foundation\Transporters\Concerns;
 
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Validation\Factory;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidatesWhenResolvedTrait;
@@ -22,10 +22,9 @@ trait ValidateConcern
     protected $app;
 
     /**
-     * @return Application
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @return Container
      */
-    public function app(): Application
+    public function app(): Container
     {
         if (is_null($this->app)) {
             $this->app = app();
