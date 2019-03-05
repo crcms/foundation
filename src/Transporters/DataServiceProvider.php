@@ -31,10 +31,6 @@ class DataServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->bind('data.provider', function ($app) {
-            return new DataProvider($app['request']->all());
-        });
-
         $this->app->afterResolving(ValidatesWhenResolved::class, function ($resolved) {
             $resolved->validateResolved();
         });
@@ -52,6 +48,10 @@ class DataServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerAlias();
+
+        $this->app->bind('data.provider', function ($app) {
+            return new DataProvider($app['request']->all());
+        });
     }
 
     /**
