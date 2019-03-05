@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Support\Http\Api\Resources;
+namespace CrCms\Foundation\Resources\Concerns;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\Resource;
