@@ -23,6 +23,18 @@ class FoundationServiceProvider extends ServiceProvider
     protected $name = 'foundation';
 
     /**
+     * boot
+     *
+     * @return void
+     */
+    public function boot(): void
+    {
+        $this->publishes([
+            $this->basePath.'config/config.php' => $this->app->configPath("{$this->name}.php")
+        ]);
+    }
+
+    /**
      * register
      *
      * @return void
@@ -35,5 +47,9 @@ class FoundationServiceProvider extends ServiceProvider
         }
 
         $this->commands([ModuleMakeCommand::class]);
+
+        if ($this->app['config']->get('foundation.auto_mount', false)) {
+            $this->app->register(MountServiceProvider::class);
+        }
     }
 }

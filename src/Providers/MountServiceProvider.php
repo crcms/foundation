@@ -22,11 +22,6 @@ use Symfony\Component\Finder\SplFileInfo;
 class MountServiceProvider extends ServiceProvider
 {
     /**
-     * @var bool
-     */
-    protected $defer = false;
-
-    /**
      * @return void
      */
     public function boot(): void
