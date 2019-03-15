@@ -16,16 +16,7 @@ composer require crcms/foundation
 
 ## Laravel
 
-If your version is less than 5.5 please modify ``config / app.php``
-
-```
-'providers' => [
-    CrCms\Foundation\Providers\FoundationServiceProvider::class,
-]
-
-```
-
-If you'd like to make configuration changes in the configuration file you can pubish it with the following Aritsan command:
+If you'd like to make configuration changes in the configuration file you can publish it with the following Artisan command:
 ```
 php artisan vendor:publish --provider="CrCms\Foundation\Providers\FoundationServiceProvider"
 ```
