@@ -9,18 +9,16 @@
 
 namespace CrCms\Foundation\Resources\Concerns;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Resources\Json\Resource;
-use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Pagination\AbstractPaginator;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Pagination\AbstractPaginator;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
 /**
- * Trait IncludeConcern
- * @package CrCms\Foundation\Resources
+ * Trait IncludeConcern.
  */
 trait IncludeConcern
 {
@@ -56,7 +54,7 @@ trait IncludeConcern
      */
     public function addInclude(string $include): self
     {
-        if (!in_array($include, $this->includes, true)) {
+        if (! in_array($include, $this->includes, true)) {
             $this->includes[] = $include;
         }
 
@@ -113,6 +111,7 @@ trait IncludeConcern
     protected function parseIncludeParams($request): array
     {
         $includes = $request->input($this->includeRequestKey, []);
+
         return is_array($includes) ? $includes : explode(',', $includes);
     }
 
@@ -124,8 +123,8 @@ trait IncludeConcern
     protected function parseIncludes(array $includes, $request): Collection
     {
         $diffIncludes = array_diff_key($includes, $this->parseIncludes);
-        
-        if (!empty($diffIncludes)) {
+
+        if (! empty($diffIncludes)) {
             $diffIncludes = Collection::make($diffIncludes)->map(function ($include) {
                 return [
                     'key' => $include,
@@ -135,6 +134,7 @@ trait IncludeConcern
                 return method_exists($this, $include['method']);
             })->mapWithKeys(function ($include) use ($request) {
                 $resource = call_user_func([$this, $include['method']], $request);
+
                 return [$include['key'] => $resource];
             })->all();
 

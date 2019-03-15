@@ -9,16 +9,15 @@
 
 namespace CrCms\Foundation\Helpers;
 
-use CrCms\Microservice\Foundation\Application;
+use Illuminate\Support\Str;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Support\Str;
-use Illuminate\Contracts\Config\Repository as Config;
-use Illuminate\Contracts\Cache\Repository as Cache;
-use Illuminate\Contracts\Auth\Factory as AuthFactory;
 use Illuminate\Contracts\Bus\Dispatcher;
+use CrCms\Microservice\Foundation\Application;
+use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Events\Dispatcher as EventDispatcher;
-use InvalidArgumentException;
+use Illuminate\Contracts\Auth\Factory as AuthFactory;
+use Illuminate\Contracts\Config\Repository as Config;
 
 /**
  * @property-read Container|Application $app
@@ -30,7 +29,6 @@ use InvalidArgumentException;
  * @property-read Guard $guard
  *
  * Trait InstanceConcern
- * @package CrCms\Foundation\Helpers
  */
 trait InstanceConcern
 {
@@ -107,7 +105,5 @@ trait InstanceConcern
         if (method_exists($this, Str::camel($name))) {
             return $this->{$name}();
         }
-
-        return null;
     }
 }

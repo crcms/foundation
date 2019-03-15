@@ -12,8 +12,7 @@ namespace CrCms\Foundation\Transporters\Concerns;
 use Illuminate\Support\Arr;
 
 /**
- * Trait InteractsWithData
- * @package CrCms\Foundation\Transporters\Concerns
+ * Trait InteractsWithData.
  */
 trait InteractsWithData
 {

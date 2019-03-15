@@ -2,15 +2,14 @@
 
 namespace CrCms\Foundation\Transporters\Concerns;
 
-use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Validation\Factory;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Validation\ValidatesWhenResolvedTrait;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\ValidatesWhenResolvedTrait;
 
 /**
- * Trait Validate
- * @package CrCms\Microservice\Server\Concerns
+ * Trait Validate.
  */
 trait ValidateConcern
 {
@@ -83,7 +82,6 @@ trait ValidateConcern
     {
         return $this->all();
     }
-
 
     /**
      * Get custom messages for validator errors.

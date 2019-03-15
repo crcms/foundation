@@ -10,8 +10,7 @@
 namespace CrCms\Foundation\Services;
 
 /**
- * Class ResponseTrait
- * @package CrCms\Foundation\Services
+ * Class ResponseTrait.
  */
 trait ResponseTrait
 {

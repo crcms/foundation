@@ -9,13 +9,12 @@
 
 namespace CrCms\Foundation\Transporters;
 
-use CrCms\Foundation\Transporters\Contracts\DataProviderContract;
-use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Validation\ValidatesWhenResolved;
+use CrCms\Foundation\Transporters\Contracts\DataProviderContract;
 
 /**
- * Class DataServiceProvider
- * @package CrCms\Microservice\Transporters
+ * Class DataServiceProvider.
  */
 class DataServiceProvider extends ServiceProvider
 {
