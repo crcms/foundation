@@ -2,8 +2,8 @@
 
 namespace CrCms\Foundation\Providers;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use CrCms\Microservice\Foundation\Application as CrCmsMicroSerivceApplication;
 
 /**
  * Class ModuleServiceProvider
@@ -69,7 +69,9 @@ abstract class ModuleServiceProvider extends ServiceProvider
         $file = $this->basePath.'routes/web.php';
 
         if (file_exists($file)) {
-            $this->loadRoutesFrom($file);
+            $this->loadRoutesFrom(
+                Route::middleware('web')
+                ->group($file));
         }
     }
 
@@ -86,19 +88,9 @@ abstract class ModuleServiceProvider extends ServiceProvider
 
         if (file_exists($file)) {
             $this->loadRoutesFrom(
-            /*Route::prefix('api')
+            Route::prefix('api')
                 ->middleware('api')
-                ->group($file)*/
-                $file
-            );
+                ->group($file));
         }
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isRunningInMicroservice(): bool
-    {
-        return $this->app instanceof CrCmsMicroSerivceApplication;
     }
 }
