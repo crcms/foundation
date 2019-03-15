@@ -12,8 +12,7 @@ namespace CrCms\Foundation\Schedules;
 use Illuminate\Console\Scheduling\Schedule;
 
 /**
- * Interface ScheduleContract
- * @package CrCms\Foundation\Schedules
+ * Interface ScheduleContract.
  */
 interface ScheduleContract
 {

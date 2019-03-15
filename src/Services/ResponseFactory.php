@@ -2,21 +2,20 @@
 
 namespace CrCms\Foundation\Services;
 
-use CrCms\Foundation\Resources\ResourceCollection;
-use Illuminate\Http\JsonResponse;
-use CrCms\Foundation\Resources\Resource;
-use Illuminate\Support\Collection;
-use Illuminate\Http\Response;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-use BadMethodCallException;
-use InvalidArgumentException;
-use JsonSerializable;
 use Traversable;
+use JsonSerializable;
+use BadMethodCallException;
+use Illuminate\Http\Response;
+use InvalidArgumentException;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Collection;
+use CrCms\Foundation\Resources\Resource;
+use CrCms\Foundation\Resources\ResourceCollection;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Contracts\Routing\ResponseFactory as FactoryContract;
 
 /**
- * Class ResponseFactory
- * @package CrCms\Foundation\Services
+ * Class ResponseFactory.
  */
 class ResponseFactory
 {
@@ -44,7 +43,7 @@ class ResponseFactory
         $response = new Response($content);
         $response->setStatusCode(201);
 
-        if (!is_null($location)) {
+        if (! is_null($location)) {
             $response->header('Location', $location);
         }
 
@@ -61,7 +60,7 @@ class ResponseFactory
         $response = new Response($content);
         $response->setStatusCode(202);
 
-        if (!is_null($location)) {
+        if (! is_null($location)) {
             $response->header('Location', $location);
         }
 
@@ -87,7 +86,7 @@ class ResponseFactory
      */
     public function collection($collection, string $collect = '', array $fields = [], array $includes = []): JsonResponse
     {
-        if (!$collection instanceof ResourceCollection && class_exists($collect)) {
+        if (! $collection instanceof ResourceCollection && class_exists($collect)) {
             if (substr($collect, -8) === 'Resource') {
                 $collection = call_user_func([$collect, 'collection'], $collection);
             } elseif (substr($collect, -10) === 'Collection') {
@@ -97,7 +96,7 @@ class ResponseFactory
             }
         }
 
-        if (!$collection instanceof ResourceCollection) {
+        if (! $collection instanceof ResourceCollection) {
             throw new InvalidArgumentException('Non-existent resource converter');
         }
 
@@ -113,11 +112,11 @@ class ResponseFactory
      */
     public function resource($resource, string $collect = '', array $fields = [], array $includes = []): JsonResponse
     {
-        if (!$resource instanceof Resource && class_exists($collect)) {
+        if (! $resource instanceof Resource && class_exists($collect)) {
             $resource = (new $collect($resource));
         }
 
-        if (!$resource instanceof Resource) {
+        if (! $resource instanceof Resource) {
             throw new InvalidArgumentException('Non-existent resource converter');
         }
 
@@ -241,7 +240,6 @@ class ResponseFactory
     public function data($data, string $key = 'data'): JsonResponse
     {
         if (is_array($data)) {
-
         } elseif ($data instanceof Collection) {
             $data = $data->all();
         } elseif ($data instanceof JsonSerializable) {
@@ -258,7 +256,7 @@ class ResponseFactory
     }
 
     /**
-     * @param ResourceCollection|Resource $resource
+     * @param ResourceCollection|resource $resource
      * @param array $fields
      * @param array $includes
      * @return JsonResponse
@@ -298,6 +296,6 @@ class ResponseFactory
             return call_user_func_array([$this->factory, $method], $parameters);
         }
 
-        throw new BadMethodCallException('Undefined method ' . get_class($this) . '::' . $method);
+        throw new BadMethodCallException('Undefined method '.get_class($this).'::'.$method);
     }
 }

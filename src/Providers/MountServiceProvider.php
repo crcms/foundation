@@ -9,15 +9,14 @@
 
 namespace CrCms\Foundation\Providers;
 
-use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Symfony\Component\Finder\Finder;
+use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Finder\SplFileInfo;
+use Illuminate\Console\Scheduling\Schedule;
 
 /**
- * Class MountServiceProvider
- * @package CrCms\Microservice\Foundation
+ * Class MountServiceProvider.
  */
 class MountServiceProvider extends ServiceProvider
 {
@@ -46,7 +45,7 @@ class MountServiceProvider extends ServiceProvider
     }
 
     /**
-     * Merge config
+     * Merge config.
      *
      * @return void
      */
@@ -105,7 +104,7 @@ class MountServiceProvider extends ServiceProvider
         /* @var SplFileInfo $file */
         foreach (Finder::create()->files()->name('*Command.php')->in($this->modulePath()) as $file) {
             $class = $this->fileToClass($file);
-            if ($class && !in_array($class, $this->app['config']->get('mount.commands', []))) {
+            if ($class && ! in_array($class, $this->app['config']->get('mount.commands', []))) {
                 $this->commands($class);
             }
         }
@@ -121,7 +120,7 @@ class MountServiceProvider extends ServiceProvider
 
         foreach (Finder::create()->files()->name('*Schedule.php')->in($this->modulePath()) as $file) {
             $class = $this->fileToClass($file);
-            if ($class && !in_array($class, $this->app['config']->get('mount.schedules', []), true)) {
+            if ($class && ! in_array($class, $this->app['config']->get('mount.schedules', []), true)) {
                 $this->app->make($class)->handle($schedule);
             }
         }
@@ -142,12 +141,10 @@ class MountServiceProvider extends ServiceProvider
                 return $class;
             }
         }
-
-        return null;
     }
 
     /**
-     * modulePath
+     * modulePath.
      *
      * @return string
      */

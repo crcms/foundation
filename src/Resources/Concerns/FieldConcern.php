@@ -9,13 +9,10 @@
 
 namespace CrCms\Foundation\Resources\Concerns;
 
-use CrCms\Foundation\Resources\Resource;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
 /**
- * Trait FieldConcern
- * @package CrCms\Foundation\Resources\Traits
+ * Trait FieldConcern.
  */
 trait FieldConcern
 {
@@ -39,6 +36,7 @@ trait FieldConcern
     {
         $this->resourceFields = $fields;
         $this->resourceType = 'except';
+
         return $this;
     }
 
@@ -59,6 +57,7 @@ trait FieldConcern
     {
         $this->resourceFields = $fields;
         $this->resourceType = 'only';
+
         return $this;
     }
 

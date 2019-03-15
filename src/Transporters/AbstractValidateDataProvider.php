@@ -9,12 +9,11 @@
 
 namespace CrCms\Foundation\Transporters;
 
-use CrCms\Foundation\Transporters\Concerns\ValidateConcern;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
+use CrCms\Foundation\Transporters\Concerns\ValidateConcern;
 
 /**
- * Class AbstractValidateDataProvider
- * @package CrCms\Foundation\Transporters
+ * Class AbstractValidateDataProvider.
  */
 abstract class AbstractValidateDataProvider extends AbstractDataProvider implements ValidatesWhenResolved
 {

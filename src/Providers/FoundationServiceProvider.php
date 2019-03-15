@@ -2,8 +2,8 @@
 
 namespace CrCms\Foundation\Providers;
 
-use CrCms\Foundation\Commands\ModuleMakeCommand;
 use Illuminate\Support\ServiceProvider;
+use CrCms\Foundation\Commands\ModuleMakeCommand;
 
 class FoundationServiceProvider extends ServiceProvider
 {
@@ -23,25 +23,25 @@ class FoundationServiceProvider extends ServiceProvider
     protected $name = 'foundation';
 
     /**
-     * boot
+     * boot.
      *
      * @return void
      */
     public function boot(): void
     {
         $this->publishes([
-            $this->basePath.'config/config.php' => $this->app->configPath("{$this->name}.php")
+            $this->basePath.'config/config.php' => $this->app->configPath("{$this->name}.php"),
         ]);
     }
 
     /**
-     * register
+     * register.
      *
      * @return void
      */
     public function register(): void
     {
-        $configPath = $this->basePath."config/config.php";
+        $configPath = $this->basePath.'config/config.php';
         if (file_exists($configPath)) {
             $this->mergeConfigFrom($configPath, $this->name);
         }

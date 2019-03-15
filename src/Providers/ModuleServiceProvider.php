@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Class ModuleServiceProvider
+ * Class ModuleServiceProvider.
  */
 abstract class ModuleServiceProvider extends ServiceProvider
 {
@@ -51,7 +51,7 @@ abstract class ModuleServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $configPath = $this->basePath."config/config.php";
+        $configPath = $this->basePath.'config/config.php';
         if (file_exists($configPath)) {
             $this->mergeConfigFrom($configPath, $this->name);
         }

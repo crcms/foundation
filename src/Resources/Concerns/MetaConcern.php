@@ -2,14 +2,13 @@
 
 namespace CrCms\Foundation\Resources\Concerns;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\Resource;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Http\Resources\Json\Resource;
 
 /**
- * Trait MetaConcern
- * @package App\Modules\Support\Http\Api\Resources
+ * Trait MetaConcern.
  */
 trait MetaConcern
 {
@@ -84,6 +83,7 @@ trait MetaConcern
     {
         $this->with['headings'] = $this->bindHeadingsToMeta($request);
         $this->with['condition'] = $this->bindConditionToMeta($request);
+
         return $this->with;
     }
 
@@ -97,9 +97,11 @@ trait MetaConcern
 
         if ($this->supportHeadingBindFilter) {
             $includeHeadings = $this->headingIncludeBindFilter($request);
+
             return $this->filterFields(array_merge($headings, $includeHeadings));
         } else {
             $includeHeadings = $this->parseIncludeMeta($this->includes($request), $request, 'bindHeadingsToMeta');
+
             return array_merge($headings, $includeHeadings);
         }
     }
@@ -129,7 +131,7 @@ trait MetaConcern
     {
         $includes = $this->includes($request);
 
-        if (property_exists($this, 'resourceFields') && property_exists($this, 'resourceType') && !empty($this->resourceFields)) {
+        if (property_exists($this, 'resourceFields') && property_exists($this, 'resourceType') && ! empty($this->resourceFields)) {
             //合并includes到字段的过滤
             if ($this->resourceFields && $includes) {
                 $func = $this->resourceType === 'only' ? 'array_intersect' : 'array_diff';
@@ -151,11 +153,11 @@ trait MetaConcern
         $type = ['bindHeadingsToMeta' => 'headings', 'bindConditionToMeta' => 'condition'];
 
         return $this->parseIncludes($includes, $request)->filter(function ($item) use ($bindType, $request, $type) {
-            return ($item instanceof ResourceCollection || $item instanceof Resource);
+            return $item instanceof ResourceCollection || $item instanceof Resource;
         })->map(function ($item) use ($bindType, $request, $type) {
             return $item->with($request)[$type[$bindType]] ?? [];
         })->filter(function ($item) {
-            return !empty($item);
+            return ! empty($item);
         })->toArray();
     }
 }

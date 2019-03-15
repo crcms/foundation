@@ -2,14 +2,13 @@
 
 namespace CrCms\Foundation\Commands;
 
+use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 
 /**
- * Class ModuleMakeCommand
- * @package CrCms\Microservice\Console\Commands
+ * Class ModuleMakeCommand.
  */
 class ModuleMakeCommand extends Command
 {
@@ -90,7 +89,7 @@ class ModuleMakeCommand extends Command
     }
 
     /**
-     * autoCreateDirs
+     * autoCreateDirs.
      *
      * @param array $dirs
      * @return void
@@ -98,14 +97,14 @@ class ModuleMakeCommand extends Command
     protected function autoCreateDirs(array $dirs): void
     {
         foreach ($dirs as $dir) {
-            if (!$this->files->exists($dir) && !empty($dir)) {
+            if (! $this->files->exists($dir) && ! empty($dir)) {
                 $this->files->makeDirectory($dir, 0755, true);
             }
         }
     }
 
     /**
-     * Create module config
+     * Create module config.
      *
      * @param string $name
      * @return void
@@ -115,7 +114,7 @@ class ModuleMakeCommand extends Command
     protected function createConfigFile(string $name): void
     {
         $file = base_path($this->moduleName().'/'.$name.'/Config/config.php');
-        if (!$this->files->exists($file)) {
+        if (! $this->files->exists($file)) {
             $this->files->put($file, $this->files->get(__DIR__.'/stubs/config.stub'));
         }
     }
@@ -129,12 +128,12 @@ class ModuleMakeCommand extends Command
     protected function createRoutes(string $name): void
     {
         $apiFile = base_path($this->moduleName().'/'.$name.'/Routes/api.php');
-        if (!$this->files->exists($apiFile)) {
+        if (! $this->files->exists($apiFile)) {
             $this->files->put($apiFile, $this->files->get(__DIR__.'/stubs/routes/api.stub'));
         }
 
         $webFile = base_path($this->moduleName().'/'.$name.'/Routes/web.php');
-        if (!$this->files->exists($webFile)) {
+        if (! $this->files->exists($webFile)) {
             $this->files->put($webFile, $this->files->get(__DIR__.'/stubs/routes/web.stub'));
         }
     }
@@ -147,13 +146,13 @@ class ModuleMakeCommand extends Command
      */
     protected function createDatabase(string $name): void
     {
-        $this->files->put($this->moduleName().'/'.$name.'/Database/Factories/UserFactory.php', $this->files->get(__DIR__ . '/stubs/factory.stub'));
-        $this->files->put($this->moduleName().'/'.$name.'/Database/Migrations/2014_10_12_000000_test_table.php', $this->files->get(__DIR__ . '/stubs/migration.stub'));
-        $this->files->put($this->moduleName().'/'.$name.'/Database/Seeds/DatabaseSeeder.php', $this->files->get(__DIR__ . '/stubs/seed.stub'));
+        $this->files->put($this->moduleName().'/'.$name.'/Database/Factories/UserFactory.php', $this->files->get(__DIR__.'/stubs/factory.stub'));
+        $this->files->put($this->moduleName().'/'.$name.'/Database/Migrations/2014_10_12_000000_test_table.php', $this->files->get(__DIR__.'/stubs/migration.stub'));
+        $this->files->put($this->moduleName().'/'.$name.'/Database/Seeds/DatabaseSeeder.php', $this->files->get(__DIR__.'/stubs/seed.stub'));
     }
 
     /**
-     * moduleName
+     * moduleName.
      *
      * @return string
      */

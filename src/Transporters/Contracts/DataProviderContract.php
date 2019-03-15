@@ -10,8 +10,7 @@
 namespace CrCms\Foundation\Transporters\Contracts;
 
 /**
- * Interface DataProviderContract
- * @package CrCms\Foundation\Transporters\Contracts
+ * Interface DataProviderContract.
  */
 interface DataProviderContract
 {

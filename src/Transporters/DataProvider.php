@@ -10,10 +10,8 @@
 namespace CrCms\Foundation\Transporters;
 
 /**
- * Class DataProvider
- * @package CrCms\Foundation\Transporters
+ * Class DataProvider.
  */
 class DataProvider extends AbstractDataProvider
 {
-
 }

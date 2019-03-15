@@ -13,11 +13,9 @@ use CrCms\Foundation\Helpers\InstanceConcern;
 use CrCms\Foundation\Tasks\Contracts\TaskContract;
 
 /**
- * Class AbstractTask
- * @package CrCms\Foundation\Tasks
+ * Class AbstractTask.
  */
 abstract class AbstractTask implements TaskContract
 {
     use InstanceConcern;
-
 }

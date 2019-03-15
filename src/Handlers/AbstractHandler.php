@@ -9,12 +9,11 @@
 
 namespace CrCms\Foundation\Handlers;
 
-use CrCms\Foundation\Handlers\Contracts\HandlerContract;
 use CrCms\Foundation\Helpers\InstanceConcern;
+use CrCms\Foundation\Handlers\Contracts\HandlerContract;
 
 /**
- * Class AbstractHandler
- * @package CrCms\Foundation\Actions
+ * Class AbstractHandler.
  */
 abstract class AbstractHandler implements HandlerContract
 {

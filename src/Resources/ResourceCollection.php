@@ -2,13 +2,12 @@
 
 namespace CrCms\Foundation\Resources;
 
-use CrCms\Foundation\Resources\Concerns\FieldConcern;
 use Illuminate\Http\Request;
+use CrCms\Foundation\Resources\Concerns\FieldConcern;
 use Illuminate\Http\Resources\Json\ResourceCollection as BaseResourceCollection;
 
 /**
- * Class ResourceCollection
- * @package CrCms\Foundation\Resources
+ * Class ResourceCollection.
  */
 class ResourceCollection extends BaseResourceCollection
 {
