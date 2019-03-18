@@ -105,7 +105,10 @@ class MountServiceProvider extends ServiceProvider
         foreach (Finder::create()->files()->name('*Command.php')->in($this->modulePath()) as $file) {
             $class = $this->fileToClass($file);
             if ($class && ! in_array($class, $this->app['config']->get('mount.commands', []))) {
-                $this->commands($class);
+                $classReflection = new \ReflectionClass($class);
+                if (!$classReflection->isAbstract()) {
+                    $this->commands($class);
+                }
             }
         }
     }
