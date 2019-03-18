@@ -27,7 +27,10 @@
     "type": "library",
     "require": {
         "php": "^7.2.4",
-        "illuminate/support": "^5.7"
+        "illuminate/support": "^5.7",
+        "illuminate/http": "^5.7",
+        "illuminate/console": "^5.7",
+        "illuminate/database": "^5.7"
     },
     "require-dev": {
     },
