@@ -11,9 +11,6 @@ namespace CrCms\Foundation\Resources\Concerns;
 
 use Illuminate\Support\Arr;
 
-/**
- * Trait FieldConcern.
- */
 trait FieldConcern
 {
     /**
@@ -30,7 +27,7 @@ trait FieldConcern
      * Set the keys that are supposed to be filtered out.
      *
      * @param array $fields
-     * @return FieldTrait
+     * @return FieldConcern
      */
     public function hide(array $fields): self
     {
@@ -42,7 +39,7 @@ trait FieldConcern
 
     /**
      * @param array $fields
-     * @return FieldTrait
+     * @return FieldConcern
      */
     public function except(array $fields): self
     {
@@ -51,7 +48,7 @@ trait FieldConcern
 
     /**
      * @param array $fields
-     * @return FieldTrait
+     * @return FieldConcern
      */
     public function only(array $fields): self
     {
