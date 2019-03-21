@@ -71,6 +71,12 @@ class DataServiceProvider extends ServiceProvider
      */
     public function provides(): array
     {
-        return ['data.provider'];
+        return [
+            'data.provider',
+            DataProvider::class,
+            DataProviderContract::class,
+            AbstractDataProvider::class,
+            AbstractValidateDataProvider::class
+        ];
     }
 }
