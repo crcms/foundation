@@ -106,7 +106,7 @@ class MountServiceProvider extends ServiceProvider
             $class = $this->fileToClass($file);
             if ($class && ! in_array($class, $this->app['config']->get('mount.commands', []))) {
                 $classReflection = new \ReflectionClass($class);
-                if (!$classReflection->isAbstract()) {
+                if (! $classReflection->isAbstract()) {
                     $this->commands($class);
                 }
             }

@@ -76,7 +76,7 @@ class DataServiceProvider extends ServiceProvider
             DataProvider::class,
             DataProviderContract::class,
             AbstractDataProvider::class,
-            AbstractValidateDataProvider::class
+            AbstractValidateDataProvider::class,
         ];
     }
 }
