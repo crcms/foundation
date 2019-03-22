@@ -53,7 +53,7 @@ class MountServiceProvider extends ServiceProvider
     {
         /* @var SplFileInfo $directory */
         /* @var SplFileInfo $file */
-        foreach (Finder::create()->directories()->name('Config')->in($this->modulePath()) as $directory) {
+        foreach (Finder::create()->directories()->depth(1)->name('Config')->in($this->modulePath()) as $directory) {
             foreach (Finder::create()->files()->name('*.php')->in($directory->getPathname()) as $file) {
                 $this->mergeConfigFrom($file->getPathname(), Str::snake($directory->getRelativePath()));
             }
@@ -66,7 +66,7 @@ class MountServiceProvider extends ServiceProvider
     protected function scanLoadMigrations(): void
     {
         /* @var SplFileInfo $directory */
-        foreach (Finder::create()->directories()->name('Migrations')->in($this->modulePath()) as $directory) {
+        foreach (Finder::create()->directories()->depth(1)->name('Migrations')->in($this->modulePath()) as $directory) {
             $this->loadMigrationsFrom($directory->getPathname());
         }
     }
@@ -77,7 +77,7 @@ class MountServiceProvider extends ServiceProvider
     protected function scanLoadTranslations(): void
     {
         /* @var SplFileInfo $directory */
-        foreach (Finder::create()->directories()->name('Translations')->in($this->modulePath()) as $directory) {
+        foreach (Finder::create()->directories()->depth(1)->name('Translations')->in($this->modulePath()) as $directory) {
             $this->loadTranslationsFrom($directory->getPathname(), Str::snake($directory->getRelativePath()));
         }
     }
@@ -89,7 +89,7 @@ class MountServiceProvider extends ServiceProvider
     {
         /* @var SplFileInfo $directory */
         /* @var SplFileInfo $file */
-        foreach (Finder::create()->directories()->name('Routes')->in($this->modulePath()) as $directory) {
+        foreach (Finder::create()->directories()->depth(1)->name('Routes')->in($this->modulePath()) as $directory) {
             foreach (Finder::create()->files()->name('*.php')->in($directory->getPathname()) as $file) {
                 require $file->getPathname();
             }
