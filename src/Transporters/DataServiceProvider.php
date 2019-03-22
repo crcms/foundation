@@ -47,7 +47,7 @@ class DataServiceProvider extends ServiceProvider
     }
 
     /**
-     * resolveRequestData
+     * resolveRequestData.
      *
      * @param $request
      * @return array
