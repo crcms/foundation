@@ -2,6 +2,7 @@
 
 namespace CrCms\Foundation\Resources\Concerns;
 
+use CrCms\Foundation\Resources\MetaResourceCollection;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -53,14 +54,14 @@ trait MetaConcern
 
         return Collection::make($this->condition($request))->map->name->toArray();
     }
-
+    
     /**
      * @param $resource
-     * @return ResourceCollection
+     * @return MetaResourceCollection
      */
     public static function collection($resource)
     {
-        return new ResourceCollection($resource, get_called_class());
+        return new MetaResourceCollection($resource, get_called_class());
     }
 
     /**
