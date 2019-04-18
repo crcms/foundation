@@ -2,11 +2,11 @@
 
 namespace CrCms\Foundation\Resources\Concerns;
 
-use CrCms\Foundation\Resources\MetaResourceCollection;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Resources\Json\Resource;
+use CrCms\Foundation\Resources\MetaResourceCollection;
 
 /**
  * Trait MetaConcern.
@@ -54,7 +54,7 @@ trait MetaConcern
 
         return Collection::make($this->condition($request))->map->name->toArray();
     }
-    
+
     /**
      * @param $resource
      * @return MetaResourceCollection
