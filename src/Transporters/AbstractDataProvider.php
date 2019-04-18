@@ -178,8 +178,8 @@ abstract class AbstractDataProvider implements DataProviderContract, ArrayAccess
      */
     public function __get(string $name)
     {
-        if ((bool) $value = $this->has($name)) {
-            return $value;
+        if ($this->has($name)) {
+            return $this->get($name);
         }
 
         throw new DomainException("The param[{$name}] not found");
