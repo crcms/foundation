@@ -13,8 +13,8 @@ use Illuminate\Support\Str;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Bus\Dispatcher;
-use Illuminate\Contracts\Cache\Factory as CacheFactory;
-use Illuminate\Contracts\Queue\Factory as QueueFactory;
+use Illuminate\Contracts\Cache\Repository as Cache;
+use Illuminate\Contracts\Queue\Queue as Queue;
 use Illuminate\Contracts\Events\Dispatcher as EventDispatcher;
 use Illuminate\Contracts\Auth\Factory as AuthFactory;
 use Illuminate\Contracts\Config\Repository as Config;
@@ -23,8 +23,8 @@ use Illuminate\Contracts\Foundation\Application;
 /**
  * @property-read Container|Application $app
  * @property-read Config $config
- * @property-read CacheFactory $cache
- * @property-read QueueFactory $queue
+ * @property-read Cache $cache
+ * @property-read Queue $queue
  * @property-read EventDispatcher $event
  * @property-read AuthFactory $auth
  * @property-read Dispatcher $dispatcher
@@ -52,12 +52,12 @@ trait InstanceConcern
     }
 
     /**
-     * @return CacheFactory
+     * @return Cache
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function cache(): CacheFactory
+    public function cache(): Cache
     {
-        return $this->app->make(CacheFactory::class);
+        return $this->app->make(Cache::class);
     }
 
     /**
@@ -97,13 +97,13 @@ trait InstanceConcern
     }
 
     /**
-     * @return QueueFactory
+     * @return Queue
      *
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function queue(): QueueFactory
+    public function queue(): Queue
     {
-        return $this->app->make(QueueFactory::class);
+        return $this->app->make(Queue::class);
     }
 
     /**
