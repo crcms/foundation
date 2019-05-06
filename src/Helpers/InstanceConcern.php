@@ -13,16 +13,18 @@ use Illuminate\Support\Str;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Bus\Dispatcher;
-use CrCms\Microservice\Foundation\Application;
-use Illuminate\Contracts\Cache\Repository as Cache;
-use Illuminate\Events\Dispatcher as EventDispatcher;
+use Illuminate\Contracts\Cache\Factory as CacheFactory;
+use Illuminate\Contracts\Queue\Factory as QueueFactory;
+use Illuminate\Contracts\Events\Dispatcher as EventDispatcher;
 use Illuminate\Contracts\Auth\Factory as AuthFactory;
 use Illuminate\Contracts\Config\Repository as Config;
+use Illuminate\Contracts\Foundation\Application;
 
 /**
  * @property-read Container|Application $app
  * @property-read Config $config
- * @property-read Cache $cache
+ * @property-read CacheFactory $cache
+ * @property-read QueueFactory $queue
  * @property-read EventDispatcher $event
  * @property-read AuthFactory $auth
  * @property-read Dispatcher $dispatcher
@@ -50,12 +52,12 @@ trait InstanceConcern
     }
 
     /**
-     * @return Cache
+     * @return CacheFactory
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function cache(): Cache
+    public function cache(): CacheFactory
     {
-        return $this->app->make(Cache::class);
+        return $this->app->make(CacheFactory::class);
     }
 
     /**
@@ -92,6 +94,16 @@ trait InstanceConcern
         $guard = is_null($guard) ? $this->config->get('auth.defaults.guard') : $guard;
 
         return $this->auth->guard($guard);
+    }
+
+    /**
+     * @return QueueFactory
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
+    public function queue(): QueueFactory
+    {
+        return $this->app->make(QueueFactory::class);
     }
 
     /**
