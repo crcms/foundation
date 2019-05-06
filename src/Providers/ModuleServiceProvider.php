@@ -27,12 +27,42 @@ abstract class ModuleServiceProvider extends ServiceProvider
     {
         $this->map();
 
-        if (file_exists($this->basePath.'database/migrations')) {
-            $this->loadMigrationsFrom($this->basePath.'database/migrations');
-        }
+        $this->loadDefaultMigrations();
 
-        if (file_exists($this->basePath.'resources/lang')) {
-            $this->loadTranslationsFrom($this->basePath.'resources/lang', $this->name);
+        $this->loadDefaultTranslations();
+    }
+
+    /**
+     * @return void
+     */
+    public function register(): void
+    {
+        $this->mergeDefaultConfig();
+    }
+
+    /**
+     * loadDefaultMigrations
+     *
+     * @param string $path
+     * @return void
+     */
+    protected function loadDefaultMigrations(string $path = 'database/migrations'): void
+    {
+        if (file_exists($this->basePath.$path)) {
+            $this->loadMigrationsFrom($this->basePath.$path);
+        }
+    }
+
+    /**
+     * loadDefaultTranslations
+     *
+     * @param string $path
+     * @return void
+     */
+    protected function loadDefaultTranslations(string $path = 'resources/lang'): void
+    {
+        if (file_exists($this->basePath.$path)) {
+            $this->loadTranslationsFrom($this->basePath.$path, $this->name);
         }
     }
 
@@ -47,11 +77,14 @@ abstract class ModuleServiceProvider extends ServiceProvider
     }
 
     /**
+     * mergeDefaultConfig
+     *
+     * @param string $path
      * @return void
      */
-    public function register(): void
+    protected function mergeDefaultConfig(string $path = 'config/config.php'): void
     {
-        $configPath = $this->basePath.'config/config.php';
+        $configPath = $this->basePath.$path;
         if (file_exists($configPath)) {
             $this->mergeConfigFrom($configPath, $this->name);
         }
@@ -71,7 +104,7 @@ abstract class ModuleServiceProvider extends ServiceProvider
         if (file_exists($file)) {
             $this->loadRoutesFrom(
                 Route::middleware('web')
-                ->group($file));
+                    ->group($file));
         }
     }
 
@@ -88,9 +121,9 @@ abstract class ModuleServiceProvider extends ServiceProvider
 
         if (file_exists($file)) {
             $this->loadRoutesFrom(
-            Route::prefix('api')
-                ->middleware('api')
-                ->group($file));
+                Route::prefix('api')
+                    ->middleware('api')
+                    ->group($file));
         }
     }
 }
