@@ -6,7 +6,7 @@ use CrCms\Foundation\Helpers\InstanceConcern;
 use CrCms\Foundation\Services\ResponseFactory;
 use Illuminate\Routing\Controller as BaseController;
 
-abstract class Controller extends BaseController
+abstract class AbstractController extends BaseController
 {
     use InstanceConcern;
 
