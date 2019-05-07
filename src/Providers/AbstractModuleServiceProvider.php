@@ -123,4 +123,14 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
                     ->group($file));
         }
     }
+
+    /**
+     * isLumen
+     *
+     * @return bool
+     */
+    protected function isLumen(): bool
+    {
+        return $this->app instanceof \Laravel\Lumen\Application;
+    }
 }
