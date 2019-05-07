@@ -107,6 +107,19 @@ trait InstanceConcern
     }
 
     /**
+     * @param $abstract
+     * @param array $parameters
+     *
+     * @return mixed
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
+    public function make($abstract, array $parameters = [])
+    {
+        return $this->app->make($abstract, $parameters);
+    }
+
+    /**
      * @param $name
      * @return null
      */
