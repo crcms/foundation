@@ -2,17 +2,6 @@
 
 namespace CrCms\Foundation\Models;
 
-use Illuminate\Database\Eloquent\Model as BaseModel;
-
-class Model extends BaseModel
+abstract class Model extends AbstractModel
 {
-    /**
-     * @var string
-     */
-    protected $dateFormat = 'U';
-
-    /**
-     * @var array
-     */
-    protected $guarded = [];
 }
