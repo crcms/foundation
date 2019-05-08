@@ -45,8 +45,9 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
      */
     protected function loadDefaultMigrations(string $path = 'database/migrations'): void
     {
-        if (file_exists($this->basePath.$path)) {
-            $this->loadMigrationsFrom($this->basePath.$path);
+        $path = $this->basePath($this->basePath.$path);
+        if (file_exists($path)) {
+            $this->loadMigrationsFrom($path);
         }
     }
 
@@ -58,8 +59,9 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
      */
     protected function loadDefaultTranslations(string $path = 'resources/lang'): void
     {
-        if (file_exists($this->basePath.$path)) {
-            $this->loadTranslationsFrom($this->basePath.$path, $this->name);
+        $path = $this->basePath($path);
+        if (file_exists($path)) {
+            $this->loadTranslationsFrom($path, $this->name);
         }
     }
 
@@ -81,7 +83,7 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
      */
     protected function mergeDefaultConfig(string $path = 'config/config.php'): void
     {
-        $configPath = $this->basePath.$path;
+        $configPath = $this->basePath($path);
         if (file_exists($configPath)) {
             $this->mergeConfigFrom($configPath, $this->name);
         }
@@ -94,9 +96,9 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function mapWebRoutes(): void
+    protected function mapWebRoutes(string $path = 'routes/web.php'): void
     {
-        $file = $this->basePath.'routes/web.php';
+        $file = $this->basePath($path);
 
         if (file_exists($file)) {
             $this->loadRoutesFrom(
@@ -112,9 +114,9 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function mapApiRoutes(): void
+    protected function mapApiRoutes(string $path = 'routes/api.php'): void
     {
-        $file = $this->basePath.'routes/api.php';
+        $file = $this->basePath($path);
 
         if (file_exists($file)) {
             $this->loadRoutesFrom(
@@ -125,12 +127,12 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
     }
 
     /**
-     * isLumen
+     * @param string|null $path
      *
-     * @return bool
+     * @return string
      */
-    protected function isLumen(): bool
+    protected function basePath(?string $path = null): string
     {
-        return $this->app instanceof \Laravel\Lumen\Application;
+        return $path ? rtrim($this->basePath, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.$path : $this->basePath;
     }
 }
