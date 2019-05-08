@@ -45,7 +45,7 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
      */
     protected function loadDefaultMigrations(string $path = 'database/migrations'): void
     {
-        $path = $this->basePath($this->basePath.$path);
+        $path = $this->basePath($path);
         if (file_exists($path)) {
             $this->loadMigrationsFrom($path);
         }
