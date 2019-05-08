@@ -2,6 +2,8 @@
 
 namespace CrCms\Foundation\Providers;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +18,13 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
      * @var string
      */
     protected $name;
+
+    /**
+     * Default model relation mappings
+     *
+     * @var array
+     */
+    protected $relationMappings = [];
 
     /**
      * @return void
@@ -65,11 +74,8 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
         }
     }
 
-
     /**
-     * Define the "web" routes for the application.
-     *
-     * These routes all receive session state, CSRF protection, etc.
+     * loadDefaultRoutes
      *
      * @return void
      */
@@ -96,6 +102,24 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
         }
     }
 
+    /**
+     * Merge relation mappings
+     *
+     * @return void
+     */
+    protected function loadRelationMapping(): void
+    {
+        $allMappings = $this->app['config']->get("app.mappings", []);
+
+        $relationMappings = array_merge(
+            $this->relationMappings,
+            Arr::only($allMappings, array_keys($this->relationMappings))
+        );
+
+        $this->app['config']->set("app.mappings", array_merge($allMappings, $relationMappings));
+
+        Relation::morphMap($relationMappings);
+    }
 
     /**
      * @param string|null $path
