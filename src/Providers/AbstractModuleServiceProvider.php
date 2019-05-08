@@ -83,35 +83,6 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
     }
 
     /**
-     * Define the "api" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
-    protected function mapApiRoutes(string $path = 'routes/api.php'): void
-    {
-        $file = $this->basePath($path);
-
-        if (file_exists($file)) {
-            $this->loadRoutesFrom(
-                Route::prefix('api')
-                    ->middleware('api')
-                    ->group($file));
-        }
-    }
-
-    /**
-     * @return void
-     */
-    protected function map(): void
-    {
-        $this->mapApiRoutes();
-
-        $this->mapWebRoutes();
-    }
-
-    /**
      * mergeDefaultConfig
      *
      * @param string $path
@@ -134,5 +105,15 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
     protected function basePath(?string $path = null): string
     {
         return $path ? rtrim($this->basePath, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.$path : $this->basePath;
+    }
+
+    /**
+     * isLumen
+     *
+     * @return bool
+     */
+    protected function isLumen(): bool
+    {
+        return $this->app instanceof \Laravel\Lumen\Application;
     }
 }
