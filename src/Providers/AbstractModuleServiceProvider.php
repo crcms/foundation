@@ -22,7 +22,7 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->map();
+        $this->loadDefaultRoutes();
 
         $this->loadDefaultMigrations();
 
@@ -65,6 +65,42 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
         }
     }
 
+
+    /**
+     * Define the "web" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function loadDefaultRoutes(string $path = 'routes/route.php'): void
+    {
+        $file = $this->basePath($path);
+
+        if (file_exists($file)) {
+            $this->loadRoutesFrom($file);
+        }
+    }
+
+    /**
+     * Define the "api" routes for the application.
+     *
+     * These routes are typically stateless.
+     *
+     * @return void
+     */
+    protected function mapApiRoutes(string $path = 'routes/api.php'): void
+    {
+        $file = $this->basePath($path);
+
+        if (file_exists($file)) {
+            $this->loadRoutesFrom(
+                Route::prefix('api')
+                    ->middleware('api')
+                    ->group($file));
+        }
+    }
+
     /**
      * @return void
      */
@@ -89,42 +125,6 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
         }
     }
 
-    /**
-     * Define the "web" routes for the application.
-     *
-     * These routes all receive session state, CSRF protection, etc.
-     *
-     * @return void
-     */
-    protected function mapWebRoutes(string $path = 'routes/web.php'): void
-    {
-        $file = $this->basePath($path);
-
-        if (file_exists($file)) {
-            $this->loadRoutesFrom(
-                Route::middleware('web')
-                    ->group($file));
-        }
-    }
-
-    /**
-     * Define the "api" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
-    protected function mapApiRoutes(string $path = 'routes/api.php'): void
-    {
-        $file = $this->basePath($path);
-
-        if (file_exists($file)) {
-            $this->loadRoutesFrom(
-                Route::prefix('api')
-                    ->middleware('api')
-                    ->group($file));
-        }
-    }
 
     /**
      * @param string|null $path
