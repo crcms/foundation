@@ -3,6 +3,7 @@
 namespace CrCms\Foundation\Schemas;
 
 use Illuminate\Database\Schema\Blueprint as BaseBlueprint;
+use Illuminate\Database\Schema\ColumnDefinition;
 
 class Blueprint
 {
@@ -42,10 +43,10 @@ class Blueprint
      * @param string $column
      * @param int $default
      *
-     * @return void
+     * @return ColumnDefinition
      */
-    public function unsignedBigIntegerDefault(string $column, int $default = 0): void
+    public function unsignedBigIntegerDefault(string $column, int $default = 0)
     {
-        $this->blueprint->unsignedBigInteger($column)->default($default);
+        return $this->blueprint->unsignedBigInteger($column)->default($default);
     }
 }
