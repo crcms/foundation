@@ -7,7 +7,7 @@
  * @copyright Copyright &copy; 2018 Rights Reserved CRCMS
  */
 
-namespace CrCms\Foundation\Handlers;
+namespace CrCms\Foundation\Helpers;
 
 use CrCms\Foundation\Foundation\InstanceTrait;
 use Illuminate\Container\Container;
