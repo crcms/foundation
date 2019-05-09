@@ -3,6 +3,7 @@
 namespace CrCms\Foundation\Providers;
 
 use CrCms\Foundation\Commands\ModuleMakeCommand;
+use Illuminate\Database\Schema\Blueprint;
 
 class FoundationServiceProvider extends AbstractModuleServiceProvider
 {
@@ -29,9 +30,11 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
     }
 
     /**
-     * register.
      *
      * @return void
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws \ReflectionException
      */
     public function register(): void
     {
@@ -40,6 +43,8 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
         $this->registerCommands();
 
         $this->loadServiceProvider();
+
+        $this->loadBlueprint();
     }
 
     /**
@@ -62,5 +67,17 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
         $this->commands([
             ModuleMakeCommand::class,
         ]);
+    }
+
+    /**
+     *
+     * @return void
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws \ReflectionException
+     */
+    protected function loadBlueprint(): void
+    {
+        Blueprint::mixin($this->app->make(\CrCms\Foundation\Schemas\Blueprint::class));
     }
 }
