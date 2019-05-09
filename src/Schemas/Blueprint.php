@@ -2,78 +2,86 @@
 
 namespace CrCms\Foundation\Schemas;
 
+use Illuminate\Database\Schema\Blueprint as BaseBlueprint;
 use Illuminate\Database\Schema\ColumnDefinition;
 
 class Blueprint
 {
     /**
+     * @param BaseBlueprint $table
      *
      * @return void
      */
-    public function integerTimestamps(): void
+    public static function integerTimestamps(BaseBlueprint $table): void
     {
-        $this->unsignedBigInteger('created_at')->default(0);
-        $this->unsignedBigInteger('updated_at')->default(0);
+        $table->unsignedBigInteger('created_at')->default(0);
+        $table->unsignedBigInteger('updated_at')->default(0);
     }
 
     /**
+     * @param BaseBlueprint $table
      *
      * @return void
      */
-    public function integerUids(): void
+    public static function integerUids(BaseBlueprint $table): void
     {
-        $this->unsignedBigIntegerDefault('created_uid');
-        $this->unsignedBigIntegerDefault('updated_uid');
+        static::unsignedBigIntegerDefault($table, 'created_uid');
+        static::unsignedBigIntegerDefault($table, 'updated_uid');
     }
 
     /**
+     * @param BaseBlueprint $table
      *
      * @return void
      */
-    public function integerSoftDeletes(): void
+    public static function integerSoftDeletes(BaseBlueprint $table): void
     {
-        $this->unsignedBigInteger('deleted_at')->nullable();
+        $table->unsignedBigInteger('deleted_at')->nullable();
     }
 
     /**
+     * @param BaseBlueprint $table
      *
      * @return void
      */
-    public function integerSoftDeleteUid(): void
+    public static function integerSoftDeleteUid(BaseBlueprint $table): void
     {
-        $this->unsignedBigIntegerDefault('deleted_uid');
+        static::unsignedBigIntegerDefault($table, 'deleted_uid');
     }
 
     /**
+     * @param BaseBlueprint $table
      * @param string $column
      * @param int $default
      *
      * @return ColumnDefinition
      */
-    public function unsignedBigIntegerDefault(string $column, int $default = 0): ColumnDefinition
+    public static function unsignedBigIntegerDefault(BaseBlueprint $table, string $column, int $default = 0): ColumnDefinition
     {
-        return $this->unsignedBigInteger($column)->default($default);
+        return $table->unsignedBigInteger($column)->default($default);
     }
 
     /**
+     * @param BaseBlueprint $table
      * @param string $column
      * @param int $default
      *
      * @return ColumnDefinition
      */
-    public function unsignedTinyIntegerDefault(string $column, int $default = 0): ColumnDefinition
+    public static function unsignedTinyIntegerDefault(BaseBlueprint $table, string $column, int $default = 0): ColumnDefinition
     {
-        return $this->unsignedTinyInteger($column)->default($default);
+        return $table->unsignedTinyInteger($column)->default($default);
     }
 
     /**
+     * @param BaseBlueprint $table
      * @param string $column
      * @param int $default
      *
      * @return ColumnDefinition
      */
-    public function unsignedIntegerDefault(string $column, int $default = 0): ColumnDefinition
+    public static function unsignedIntegerDefault(BaseBlueprint $table, string $column, int $default = 0): ColumnDefinition
     {
-        return $this->unsignedInteger($column)->default($default);
+        return $table->unsignedInteger($column)->default($default);
     }
 }

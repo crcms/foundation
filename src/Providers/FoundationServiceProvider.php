@@ -4,6 +4,7 @@ namespace CrCms\Foundation\Providers;
 
 use CrCms\Foundation\Commands\ModuleMakeCommand;
 use Illuminate\Database\Schema\Blueprint;
+use CrCms\Foundation\Schemas\Blueprint as CrCmsBlueprint;
 
 class FoundationServiceProvider extends AbstractModuleServiceProvider
 {
@@ -78,6 +79,26 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
      */
     protected function loadBlueprint(): void
     {
-        Blueprint::mixin(new \CrCms\Foundation\Schemas\Blueprint);
+        Blueprint::macro('integerTimestamps', function () {
+            CrCmsBlueprint::integerTimestamps($this);
+        });
+        Blueprint::macro('integerUids', function () {
+            CrCmsBlueprint::integerUids($this);
+        });
+        Blueprint::macro('integerSoftDeletes', function () {
+            CrCmsBlueprint::integerSoftDeletes($this);
+        });
+        Blueprint::macro('integerSoftDeleteUid', function () {
+            CrCmsBlueprint::integerSoftDeleteUid($this);
+        });
+        Blueprint::macro('unsignedBigIntegerDefault', function (...$args) {
+            return CrCmsBlueprint::unsignedBigIntegerDefault($this, ...$args);
+        });
+        Blueprint::macro('unsignedTinyIntegerDefault', function (...$args) {
+            return CrCmsBlueprint::unsignedTinyIntegerDefault($this, ...$args);
+        });
+        Blueprint::macro('unsignedIntegerDefault', function (...$args) {
+            return CrCmsBlueprint::unsignedIntegerDefault($this, ...$args);
+        });
     }
 }
