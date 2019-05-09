@@ -2,35 +2,22 @@
 
 namespace CrCms\Foundation\Schemas;
 
-use Illuminate\Database\Schema\Blueprint as BaseBlueprint;
 use Illuminate\Database\Schema\ColumnDefinition;
 
 class Blueprint
 {
-    /**
-     * @var BaseBlueprint
-     */
-    protected $blueprint;
-
-    /**
-     * @param BaseBlueprint $blueprint
-     */
-    public function __construct(BaseBlueprint $blueprint)
-    {
-        $this->blueprint = $blueprint;
-    }
-
     /**
      *
      * @return void
      */
     public function integerTimestamps(): void
     {
-        $this->blueprint->unsignedBigInteger('created_at')->default(0);
-        $this->blueprint->unsignedBigInteger('updated_at')->default(0);
+        $this->unsignedBigInteger('created_at')->default(0);
+        $this->unsignedBigInteger('updated_at')->default(0);
     }
 
     /**
+     *
      * @return void
      */
     public function integerUids(): void
@@ -45,7 +32,7 @@ class Blueprint
      */
     public function integerSoftDeletes(): void
     {
-        $this->blueprint->unsignedBigInteger('deleted_at')->nullable();
+        $this->unsignedBigInteger('deleted_at')->nullable();
     }
 
     /**
@@ -65,7 +52,7 @@ class Blueprint
      */
     public function unsignedBigIntegerDefault(string $column, int $default = 0): ColumnDefinition
     {
-        return $this->blueprint->unsignedBigInteger($column)->default($default);
+        return $this->unsignedBigInteger($column)->default($default);
     }
 
     /**
@@ -76,7 +63,7 @@ class Blueprint
      */
     public function unsignedTinyIntegerDefault(string $column, int $default = 0): ColumnDefinition
     {
-        return $this->blueprint->unsignedTinyInteger($column)->default($default);
+        return $this->unsignedTinyInteger($column)->default($default);
     }
 
     /**
@@ -87,6 +74,6 @@ class Blueprint
      */
     public function unsignedIntegerDefault(string $column, int $default = 0): ColumnDefinition
     {
-        return $this->blueprint->unsignedInteger($column)->default($default);
+        return $this->unsignedInteger($column)->default($default);
     }
 }

@@ -78,6 +78,6 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
      */
     protected function loadBlueprint(): void
     {
-        Blueprint::mixin($this->app->make(\CrCms\Foundation\Schemas\Blueprint::class));
+        Blueprint::mixin(new \CrCms\Foundation\Schemas\Blueprint);
     }
 }
