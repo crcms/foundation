@@ -28,10 +28,9 @@
     "require": {
         "php": "^7.3",
         "ext-json": "*",
-        "illuminate/contract": "^5.8",
+        "illuminate/container": "^5.8",
         "illuminate/support": "^5.8",
         "illuminate/console": "^5.8"
-
     },
     "require-dev": {
         "illuminate/http": "^5.8",
