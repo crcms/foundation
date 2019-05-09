@@ -9,7 +9,7 @@
 
 namespace CrCms\Foundation\Handlers;
 
-use CrCms\Foundation\Helpers\InstanceConcern;
+use CrCms\Foundation\Foundation\InstanceConcern;
 use CrCms\Foundation\Handlers\Contracts\HandlerContract;
 
 /**

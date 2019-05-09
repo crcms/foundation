@@ -9,7 +9,7 @@
 
 namespace CrCms\Foundation\Tasks;
 
-use CrCms\Foundation\Helpers\InstanceConcern;
+use CrCms\Foundation\Foundation\InstanceTrait;
 use CrCms\Foundation\Tasks\Contracts\TaskContract;
 
 /**
@@ -17,5 +17,5 @@ use CrCms\Foundation\Tasks\Contracts\TaskContract;
  */
 abstract class AbstractTask implements TaskContract
 {
-    use InstanceConcern;
+    use InstanceTrait;
 }
