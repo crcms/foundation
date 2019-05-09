@@ -34,9 +34,10 @@
 
     },
     "require-dev": {
-        "illuminate/http": "^5.7",
-        "illuminate/routing": "^5.7",
-        "illuminate/database": "^5.7"
+        "illuminate/http": "^5.8",
+        "illuminate/queue": "^5.8",
+        "illuminate/routing": "^5.8",
+        "illuminate/database": "^5.8"
     },
     "autoload": {
         "classmap": [
