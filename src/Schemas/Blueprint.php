@@ -31,12 +31,30 @@ class Blueprint
     }
 
     /**
+     * @return void
+     */
+    public function integerUids(): void
+    {
+        $this->unsignedBigIntegerDefault('created_uid');
+        $this->unsignedBigIntegerDefault('updated_uid');
+    }
+
+    /**
      *
      * @return void
      */
     public function integerSoftDeletes(): void
     {
         $this->blueprint->unsignedBigInteger('deleted_at')->nullable();
+    }
+
+    /**
+     *
+     * @return void
+     */
+    public function integerSoftDeleteUid(): void
+    {
+        $this->unsignedBigIntegerDefault('deleted_uid');
     }
 
     /**
