@@ -63,8 +63,30 @@ class Blueprint
      *
      * @return ColumnDefinition
      */
-    public function unsignedBigIntegerDefault(string $column, int $default = 0)
+    public function unsignedBigIntegerDefault(string $column, int $default = 0): ColumnDefinition
     {
         return $this->blueprint->unsignedBigInteger($column)->default($default);
+    }
+
+    /**
+     * @param string $column
+     * @param int $default
+     *
+     * @return ColumnDefinition
+     */
+    public function unsignedTinyIntegerDefault(string $column, int $default = 0): ColumnDefinition
+    {
+        return $this->blueprint->unsignedTinyInteger($column)->default($default);
+    }
+
+    /**
+     * @param string $column
+     * @param int $default
+     *
+     * @return ColumnDefinition
+     */
+    public function unsignedIntegerDefault(string $column, int $default = 0): ColumnDefinition
+    {
+        return $this->blueprint->unsignedInteger($column)->default($default);
     }
 }
