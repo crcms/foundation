@@ -54,7 +54,7 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
      */
     protected function loadServiceProvider(): void
     {
-        if ($this->app['config']->get('foundation.mount', false)) {
+        if ($this->app['config']->get('foundation.load', false)) {
             $this->app->register(LoadServiceProvider::class);
         }
     }
