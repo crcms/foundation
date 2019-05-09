@@ -46,6 +46,6 @@ class Blueprint
      */
     public function unsignedBigIntegerDefault(string $column, int $default = 0): void
     {
-        $this->blueprint->unsignedBigInteger($column)->default($default)->nullable();
+        $this->blueprint->unsignedBigInteger($column)->default($default);
     }
 }
