@@ -2,16 +2,10 @@
 
 namespace CrCms\Foundation\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use CrCms\Foundation\Commands\ModuleMakeCommand;
 
-class FoundationServiceProvider extends ServiceProvider
+class FoundationServiceProvider extends AbstractModuleServiceProvider
 {
-    /**
-     * @var bool
-     */
-    protected $defer = false;
-
     /**
      * @var string
      */
@@ -30,7 +24,7 @@ class FoundationServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->publishes([
-            $this->basePath.'config/config.php' => $this->app->configPath("{$this->name}.php"),
+            $this->basePath('config/config.php') => $this->app->configPath("{$this->name}.php"),
         ]);
     }
 
@@ -41,15 +35,32 @@ class FoundationServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $configPath = $this->basePath.'config/config.php';
-        if (file_exists($configPath)) {
-            $this->mergeConfigFrom($configPath, $this->name);
-        }
+        $this->mergeDefaultConfig();
 
-        $this->commands([ModuleMakeCommand::class]);
+        $this->registerCommands();
 
-        if ($this->app['config']->get('foundation.auto_mount', false)) {
-            $this->app->register(MountServiceProvider::class);
+        $this->loadServiceProvider();
+    }
+
+    /**
+     *
+     * @return void
+     */
+    protected function loadServiceProvider(): void
+    {
+        if ($this->app['config']->get('foundation.mount', false)) {
+            $this->app->register(LoadServiceProvider::class);
         }
+    }
+
+    /**
+     *
+     * @return void
+     */
+    protected function registerCommands(): void
+    {
+        $this->commands([
+            ModuleMakeCommand::class,
+        ]);
     }
 }

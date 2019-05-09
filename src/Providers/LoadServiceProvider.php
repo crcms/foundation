@@ -18,7 +18,7 @@ use Illuminate\Console\Scheduling\Schedule;
 /**
  * Class MountServiceProvider.
  */
-class MountServiceProvider extends ServiceProvider
+class LoadServiceProvider extends ServiceProvider
 {
     /**
      * @return void

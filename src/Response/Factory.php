@@ -1,6 +1,6 @@
 <?php
 
-namespace CrCms\Foundation\Services;
+namespace CrCms\Foundation\Response;
 
 use Traversable;
 use JsonSerializable;
@@ -14,10 +14,7 @@ use CrCms\Foundation\Resources\ResourceCollection;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Contracts\Routing\ResponseFactory as FactoryContract;
 
-/**
- * Class ResponseFactory.
- */
-class ResponseFactory
+class Factory
 {
     /**
      * @var FactoryContract

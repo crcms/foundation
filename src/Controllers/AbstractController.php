@@ -3,7 +3,7 @@
 namespace CrCms\Foundation\Controllers;
 
 use CrCms\Foundation\Helpers\InstanceConcern;
-use CrCms\Foundation\Services\ResponseFactory;
+use CrCms\Foundation\Response\Factory as ResponseFactory;
 use Illuminate\Routing\Controller as BaseController;
 
 abstract class AbstractController extends BaseController
@@ -21,7 +21,7 @@ abstract class AbstractController extends BaseController
     protected $response;
 
     /**
-     * Controller constructor.
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function __construct()
     {
@@ -30,9 +30,11 @@ abstract class AbstractController extends BaseController
 
     /**
      * @return ResponseFactory
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     protected function response(): ResponseFactory
     {
-        return $this->app->make(ResponseFactory::class);
+        return $this->make(ResponseFactory::class);
     }
 }

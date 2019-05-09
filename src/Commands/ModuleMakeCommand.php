@@ -41,7 +41,11 @@ class ModuleMakeCommand extends Command
     }
 
     /**
+     *
      * @return void
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     public function handle(): void
     {
@@ -64,27 +68,27 @@ class ModuleMakeCommand extends Command
     protected function createModules(string $name): void
     {
         $this->autoCreateDirs([
-            base_path($this->moduleName().'/'.$name.'/Schedules'),
-            base_path($this->moduleName().'/'.$name.'/Config'),
-            base_path($this->moduleName().'/'.$name.'/Commands'),
-            base_path($this->moduleName().'/'.$name.'/Events'),
-            base_path($this->moduleName().'/'.$name.'/Exceptions'),
-            base_path($this->moduleName().'/'.$name.'/Handlers'),
-            base_path($this->moduleName().'/'.$name.'/Tasks'),
-            base_path($this->moduleName().'/'.$name.'/Jobs'),
-            base_path($this->moduleName().'/'.$name.'/Listeners'),
-            base_path($this->moduleName().'/'.$name.'/Models'),
-            base_path($this->moduleName().'/'.$name.'/Providers'),
-            base_path($this->moduleName().'/'.$name.'/Repositories/Constants'),
-            base_path($this->moduleName().'/'.$name.'/Middleware'),
-            base_path($this->moduleName().'/'.$name.'/DataProviders'),
-            base_path($this->moduleName().'/'.$name.'/Controllers'),
-            base_path($this->moduleName().'/'.$name.'/Resources'),
-            base_path($this->moduleName().'/'.$name.'/Routes'),
-            base_path($this->moduleName().'/'.$name.'/Translations'),
-            base_path($this->moduleName().'/'.$name.'/Database/Factories'),
-            base_path($this->moduleName().'/'.$name.'/Database/Migrations'),
-            base_path($this->moduleName().'/'.$name.'/Database/Seeds'),
+            $this->modulePath($name.'/Schedules'),
+            $this->modulePath($name.'/Config'),
+            $this->modulePath($name.'/Commands'),
+            $this->modulePath($name.'/Events'),
+            $this->modulePath($name.'/Exceptions'),
+            $this->modulePath($name.'/Handlers'),
+            $this->modulePath($name.'/Tasks'),
+            $this->modulePath($name.'/Jobs'),
+            $this->modulePath($name.'/Listeners'),
+            $this->modulePath($name.'/Models'),
+            $this->modulePath($name.'/Providers'),
+            $this->modulePath($name.'/Repositories'),
+            $this->modulePath($name.'/Middleware'),
+            $this->modulePath($name.'/DataProviders'),
+            $this->modulePath($name.'/Controllers'),
+            $this->modulePath($name.'/Resources'),
+            $this->modulePath($name.'/Routes'),
+            $this->modulePath($name.'/Translations'),
+            $this->modulePath($name.'/Database/Factories'),
+            $this->modulePath($name.'/Database/Migrations'),
+            $this->modulePath($name.'/Database/Seeds'),
         ]);
     }
 
@@ -113,7 +117,7 @@ class ModuleMakeCommand extends Command
      */
     protected function createConfigFile(string $name): void
     {
-        $file = base_path($this->moduleName().'/'.$name.'/Config/config.php');
+        $file = $this->modulePath($name.'/Config/config.php');
         if (! $this->files->exists($file)) {
             $this->files->put($file, $this->files->get(__DIR__.'/stubs/config.stub'));
         }
@@ -127,14 +131,9 @@ class ModuleMakeCommand extends Command
      */
     protected function createRoutes(string $name): void
     {
-        $apiFile = base_path($this->moduleName().'/'.$name.'/Routes/api.php');
+        $apiFile = $this->modulePath($name.'/Routes/route.php');
         if (! $this->files->exists($apiFile)) {
-            $this->files->put($apiFile, $this->files->get(__DIR__.'/stubs/routes/api.stub'));
-        }
-
-        $webFile = base_path($this->moduleName().'/'.$name.'/Routes/web.php');
-        if (! $this->files->exists($webFile)) {
-            $this->files->put($webFile, $this->files->get(__DIR__.'/stubs/routes/web.stub'));
+            $this->files->put($apiFile, $this->files->get(__DIR__.'/stubs/routes/route.stub'));
         }
     }
 
@@ -146,9 +145,9 @@ class ModuleMakeCommand extends Command
      */
     protected function createDatabase(string $name): void
     {
-        $this->files->put($this->moduleName().'/'.$name.'/Database/Factories/UserFactory.php', $this->files->get(__DIR__.'/stubs/factory.stub'));
-        $this->files->put($this->moduleName().'/'.$name.'/Database/Migrations/2014_10_12_000000_test_table.php', $this->files->get(__DIR__.'/stubs/migration.stub'));
-        $this->files->put($this->moduleName().'/'.$name.'/Database/Seeds/DatabaseSeeder.php', $this->files->get(__DIR__.'/stubs/seed.stub'));
+        $this->files->put($this->modulePath($name.'/Database/Factories/UserFactory.php'), $this->files->get(__DIR__.'/stubs/factory.stub'));
+        $this->files->put($this->modulePath($name.'/Database/Migrations/2014_10_12_000000_test_table.php'), $this->files->get(__DIR__.'/stubs/migration.stub'));
+        $this->files->put($this->modulePath($name.'/Database/Seeds/DatabaseSeeder.php'), $this->files->get(__DIR__.'/stubs/seed.stub'));
     }
 
     /**
@@ -159,6 +158,26 @@ class ModuleMakeCommand extends Command
     protected function moduleName(): string
     {
         return basename($this->laravel['config']->get('foundation.module_path'));
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    protected function modulePath(string $path = '')
+    {
+        return $this->basePath($this->moduleName().($path ? DIRECTORY_SEPARATOR.$path : $path));
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    protected function basePath(string $path = ''): string
+    {
+        return $this->getLaravel()->basePath().($path ? DIRECTORY_SEPARATOR.$path : $path);
     }
 
     /**

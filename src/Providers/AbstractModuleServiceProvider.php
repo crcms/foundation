@@ -5,7 +5,6 @@ namespace CrCms\Foundation\Providers;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Route;
 
 abstract class AbstractModuleServiceProvider extends ServiceProvider
 {
@@ -25,26 +24,6 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
      * @var array
      */
     protected $relationMappings = [];
-
-    /**
-     * @return void
-     */
-    public function boot(): void
-    {
-        $this->loadDefaultRoutes();
-
-        $this->loadDefaultMigrations();
-
-        $this->loadDefaultTranslations();
-    }
-
-    /**
-     * @return void
-     */
-    public function register(): void
-    {
-        $this->mergeDefaultConfig();
-    }
 
     /**
      * loadDefaultMigrations
@@ -96,6 +75,10 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
      */
     protected function mergeDefaultConfig(string $path = 'config/config.php'): void
     {
+        if ($this->isLumen()) {
+            $this->app->configure($this->name);
+        }
+
         $configPath = $this->basePath($path);
         if (file_exists($configPath)) {
             $this->mergeConfigFrom($configPath, $this->name);
@@ -109,14 +92,14 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
      */
     protected function loadRelationMapping(): void
     {
-        $allMappings = $this->app['config']->get("app.mappings", []);
+        $allMappings = $this->app['config']->get("foundation.model_relation_mappings", []);
 
         $relationMappings = array_merge(
             $this->relationMappings,
             Arr::only($allMappings, array_keys($this->relationMappings))
         );
 
-        $this->app['config']->set("app.mappings", array_merge($allMappings, $relationMappings));
+        $this->app['config']->set("foundation.model_relation_mappings", array_merge($allMappings, $relationMappings));
 
         Relation::morphMap($relationMappings);
     }
