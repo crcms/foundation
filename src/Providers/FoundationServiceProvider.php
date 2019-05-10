@@ -2,8 +2,11 @@
 
 namespace CrCms\Foundation\Providers;
 
+use CrCms\Foundation\Commands\ControllerMakeCommand;
+use CrCms\Foundation\Commands\FunctionMakeCommand;
 use CrCms\Foundation\Commands\HandlerMakeCommand;
 use CrCms\Foundation\Commands\ModuleMakeCommand;
+use CrCms\Foundation\Commands\ResourceMakeCommand;
 use CrCms\Foundation\Commands\TaskMakeCommand;
 use CrCms\Foundation\Commands\ValidationMakeCommand;
 use Illuminate\Database\Schema\Blueprint;
@@ -31,6 +34,8 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
         $this->publishes([
             $this->basePath('config/config.php') => $this->app->configPath("{$this->name}.php"),
         ]);
+
+        $this->extendCommands();
     }
 
     /**
@@ -55,6 +60,21 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
      *
      * @return void
      */
+    protected function extendCommands(): void
+    {
+        $this->app->extend('command.resource.make', function ($resource, $app) {
+            return new ResourceMakeCommand($app['files']);
+        });
+
+        $this->app->extend('command.controller.make', function ($controller, $app) {
+            return new ControllerMakeCommand($app['files']);
+        });
+    }
+
+    /**
+     *
+     * @return void
+     */
     protected function loadServiceProvider(): void
     {
         if ($this->app['config']->get('foundation.load', false)) {
@@ -73,6 +93,7 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
             HandlerMakeCommand::class,
             TaskMakeCommand::class,
             ValidationMakeCommand::class,
+            FunctionMakeCommand::class,
         ]);
     }
 
