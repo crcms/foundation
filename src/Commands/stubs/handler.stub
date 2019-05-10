@@ -1,0 +1,19 @@
+<?php
+
+namespace DummyNamespace;
+
+use CrCms\Foundation\Handlers\AbstractHandler;
+use CrCms\Foundation\Transporters\Contracts\DataProviderContract;
+
+final class DummyClass extends AbstractHandler
+{
+    /**
+     * @param DataProviderContract $provider
+     *
+     * @return mixed
+     */
+    public function handle(DataProviderContract $provider)
+    {
+
+    }
+}

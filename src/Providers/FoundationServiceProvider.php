@@ -2,7 +2,10 @@
 
 namespace CrCms\Foundation\Providers;
 
+use CrCms\Foundation\Commands\HandlerMakeCommand;
 use CrCms\Foundation\Commands\ModuleMakeCommand;
+use CrCms\Foundation\Commands\TaskMakeCommand;
+use CrCms\Foundation\Commands\ValidationMakeCommand;
 use Illuminate\Database\Schema\Blueprint;
 use CrCms\Foundation\Schemas\Blueprint as CrCmsBlueprint;
 
@@ -67,6 +70,9 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
     {
         $this->commands([
             ModuleMakeCommand::class,
+            HandlerMakeCommand::class,
+            TaskMakeCommand::class,
+            ValidationMakeCommand::class,
         ]);
     }
 
