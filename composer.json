@@ -33,10 +33,15 @@
         "illuminate/console": "^5.8"
     },
     "require-dev": {
+        "codedungeon/phpunit-result-printer": "^0.26.2",
+        "illuminate/database": "^5.8",
         "illuminate/http": "^5.8",
         "illuminate/queue": "^5.8",
         "illuminate/routing": "^5.8",
-        "illuminate/database": "^5.8"
+        "laravel/framework": "^5.8",
+        "mockery/mockery": "^1.2",
+        "phpunit/phpunit": "^8.1",
+        "symfony/var-dumper": "^4.2"
     },
     "autoload": {
         "classmap": [
