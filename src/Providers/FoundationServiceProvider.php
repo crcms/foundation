@@ -5,8 +5,10 @@ namespace CrCms\Foundation\Providers;
 use CrCms\Foundation\Commands\ControllerMakeCommand;
 use CrCms\Foundation\Commands\FunctionMakeCommand;
 use CrCms\Foundation\Commands\HandlerMakeCommand;
+use CrCms\Foundation\Commands\ModelMakeCommand;
 use CrCms\Foundation\Commands\ModuleMakeCommand;
 use CrCms\Foundation\Commands\ResourceMakeCommand;
+use CrCms\Foundation\Commands\RuleMakeCommand;
 use CrCms\Foundation\Commands\TaskMakeCommand;
 use CrCms\Foundation\Commands\ValidationMakeCommand;
 use Illuminate\Database\Schema\Blueprint;
@@ -62,12 +64,20 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
      */
     protected function extendCommands(): void
     {
-        $this->app->extend('command.resource.make', function ($resource, $app) {
+        $this->app->extend('command.resource.make', function ($object, $app) {
             return new ResourceMakeCommand($app['files']);
         });
 
-        $this->app->extend('command.controller.make', function ($controller, $app) {
+        $this->app->extend('command.controller.make', function ($object, $app) {
             return new ControllerMakeCommand($app['files']);
+        });
+
+        $this->app->singleton('command.model.make', function ($object, $app) {
+            return new ModelMakeCommand($app['files']);
+        });
+
+        $this->app->singleton('command.rule.make', function ($object, $app) {
+            return new RuleMakeCommand($app['files']);
         });
     }
 

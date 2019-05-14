@@ -1,0 +1,35 @@
+<?php
+
+namespace DummyNamespace;
+
+use CrCms\Foundation\Handlers\AbstractHandler;
+use DummyFullValidationClass;
+use Illuminate\Contracts\Pagination\Paginator;
+use DummyFullRepositoryClass;
+use DummyFullMagicClass;
+
+final class DummyClass extends AbstractHandler
+{
+    /**
+     * @var DummyRepositoryClass
+     */
+    protected $repository;
+
+    /**
+     * @param DummyRepositoryClass $repository
+     */
+    public function __construct(DummyRepositoryClass $repository)
+    {
+        $this->repository = $repository;
+    }
+
+    /**
+     * @param DummyValidationClass $provider
+     *
+     * @return Paginator
+     */
+    public function handle(DummyValidationClass $provider): Paginator
+    {
+        return $this->repository->magic(new DummyMagicClass($provider->all()))->paginate();
+    }
+}

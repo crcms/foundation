@@ -37,10 +37,11 @@ class HandlerMakeCommand extends GeneratorCommand
     public function getOptions(): array
     {
         return [
-            ['action', 'a', InputOption::VALUE_OPTIONAL, 'Create action type handler'],
-            ['model', 'm', InputOption::VALUE_OPTIONAL, 'Create action type handler'],
-            ['repository', 'r', InputOption::VALUE_OPTIONAL, 'Create action type handler'],
-            ['magic', null, InputOption::VALUE_OPTIONAL, 'Create action type handler'],
+            ['action', 'a', InputOption::VALUE_OPTIONAL, 'Create action type handler,only supported [store|update|delete|list|show]'],
+            ['model', 'm', InputOption::VALUE_OPTIONAL, 'Dependent model'],
+            ['repository', 'r', InputOption::VALUE_OPTIONAL, 'Dependent repository'],
+            ['validation', null, InputOption::VALUE_OPTIONAL, 'Dependent validation'],
+            ['magic', null, InputOption::VALUE_OPTIONAL, 'Dependent magic'],
             ['force', null, InputOption::VALUE_NONE, 'Create the class even if the handler already exists'],
         ];
     }
@@ -77,6 +78,15 @@ class HandlerMakeCommand extends GeneratorCommand
             $magicClass = $this->parseType($this->option('magic'));
             $replace['DummyFullMagicClass'] = $magicClass;
             $replace['DummyMagicClass'] = class_basename($magicClass);
+        }
+
+        if ($this->option('validation')) {
+            $validationClass = $this->parseType($this->option('validation'));
+            $replace['DummyFullValidationClass'] = $validationClass;
+            $replace['DummyValidationClass'] = class_basename($validationClass);
+        } else {
+            $replace['DummyFullValidationClass'] = 'CrCms\Foundation\Transporters\Contracts\DataProviderContract';
+            $replace['DummyValidationClass'] = 'DataProviderContract';
         }
 
         return str_replace(
@@ -116,14 +126,15 @@ class HandlerMakeCommand extends GeneratorCommand
         $action = '';
 
         if ($this->option('action')) {
-            $action = $this->option('action');
-            if (! in_array($action, ['store', 'update', 'delete', 'list', 'show'])) {
-                $this->error('Action not within the allowable range [store,update,delete,list]');
+            if (! in_array($this->option('action'), ['store', 'update', 'delete', 'list', 'show'])) {
+                $this->error('Action not within the allowable range [store,update,delete,list,show]');
                 exit(1);
             }
+
+            $action = $this->option('action').'.';
         }
 
-        return __DIR__."/stubs/handler.{$action}.stub";
+        return __DIR__."/stubs/handler.{$action}stub";
     }
 }
 

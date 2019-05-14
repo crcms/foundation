@@ -1,0 +1,34 @@
+<?php
+
+namespace DummyNamespace;
+
+use CrCms\Foundation\Handlers\AbstractHandler;
+use DummyFullValidationClass;
+use DummyFullRepositoryClass;
+use DummyFullModelClass;
+
+final class DummyClass extends AbstractHandler
+{
+    /**
+     * @var DummyRepositoryClass
+     */
+    protected $repository;
+
+    /**
+     * @param DummyRepositoryClass $repository
+     */
+    public function __construct(DummyRepositoryClass $repository)
+    {
+        $this->repository = $repository;
+    }
+
+    /**
+     * @param DummyValidationClass $provider
+     *
+     * @return DummyModelClass
+     */
+    public function handle(DummyValidationClass $provider): DummyModelClass
+    {
+        return $this->repository->byIntIdOrFail(intval($provider->get('DummySegment')));
+    }
+}

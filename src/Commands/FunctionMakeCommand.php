@@ -30,11 +30,10 @@ class FunctionMakeCommand extends Command
             $appendOptions['--force'] = '--force';
         }
 
-        $action = explode(',', $this->option('action'));
-        $actions = array_intersect($action, ['store', 'update', 'delete', 'list', 'show']);
+        $actions = array_intersect($this->getActions(), ['store', 'update', 'delete', 'list', 'show']);
 
         if (empty($actions)) {
-            $this->error('Action not within the allowable range [store,update,delete,list]');
+            $this->error('Action not within the allowable range [store,update,delete,list,show]');
             return false;
         }
 
@@ -48,6 +47,7 @@ class FunctionMakeCommand extends Command
         $controller = $namespace.'/Controllers/'.$basename.'Controller';
         $resource = $namespace.'/Resources/'.$basename.'Resource';
         $handlerPath = $namespace.'/Handlers/'.$basename.'/';
+        $validationPath = $namespace.'/DataProviders/'.$basename.'/';
 
         if ($this->option('all')) {
             $this->input->setOption('model', true);
@@ -56,8 +56,8 @@ class FunctionMakeCommand extends Command
             $this->input->setOption('controller', true);
             $this->input->setOption('handler', true);
             $this->input->setOption('resource', true);
+            $this->input->setOption('validation', true);
         }
-
 
         if ($this->option('model')) {
             $this->call('make:model', array_merge($appendOptions, ['name' => $model]));
@@ -97,6 +97,14 @@ class FunctionMakeCommand extends Command
             }
         }
 
+        if ($this->option('validation')) {
+            foreach ($actions as $action) {
+                $this->call('make:validation', array_merge($appendOptions, [
+                    'name' => $validationPath.Str::studly($action).'DataProvider',
+                ]));
+            }
+        }
+
         $this->info('Function '.$basename.' created successfully.');
     }
 
@@ -116,11 +124,21 @@ class FunctionMakeCommand extends Command
      *
      * @return array
      */
+    protected function getActions(): array
+    {
+        $option = $this->option('action');
+        return $option ? explode(',', $option) : ['store', 'update', 'delete', 'list', 'show'];
+    }
+
+    /**
+     *
+     * @return array
+     */
     public function getOptions(): array
     {
         return [
             ['all', null, InputOption::VALUE_NONE, 'Create all action'],
-            ['action', 'a', InputOption::VALUE_REQUIRED, 'Function action key:rule, Example: list,store,update,delete'],
+            ['action', 'a', InputOption::VALUE_OPTIONAL, 'Function action key:rule, Example: list,store,update,delete,show'],
             ['validation', null, InputOption::VALUE_NONE, 'Create validation'],
             ['model', 'm', InputOption::VALUE_NONE, 'Create model'],
             ['handler', null, InputOption::VALUE_NONE, 'Create handler'],

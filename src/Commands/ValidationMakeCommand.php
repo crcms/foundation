@@ -88,7 +88,7 @@ class ValidationMakeCommand extends GeneratorCommand
             return var_export($rules, true);
         }
 
-        return '';
+        return '[]';
     }
 
     /**
