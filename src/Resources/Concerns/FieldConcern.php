@@ -29,6 +29,11 @@ trait FieldConcern
     protected $scenes = [];
 
     /**
+     * @var string
+     */
+    protected $scene;
+
+    /**
      * Set the keys that are supposed to be filtered out.
      *
      * @param array $fields
@@ -58,9 +63,8 @@ trait FieldConcern
      */
     public function scene(string $scene): self
     {
-        $this->resourceFields = $this->scenes[$scene] ?? [];
-        $this->resourceType = 'only';
-
+        $this->scene = $scene;
+        $this->resourceType = 'scene';
         return $this;
     }
 
@@ -84,6 +88,11 @@ trait FieldConcern
      */
     protected function filterFields(array $array): array
     {
+        if ($this->resourceType === 'scene') {
+            $this->resourceType = 'only';
+            $this->resourceFields = $this->scenes[$this->scene];
+        }
+
         return Arr::{$this->resourceType}($array, $this->resourceFields);
     }
 }
