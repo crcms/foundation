@@ -128,13 +128,16 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
         Blueprint::macro('integerSoftDeleteUid', function () {
             CrCmsBlueprint::integerSoftDeleteUid($this);
         });
+        Blueprint::macro('integerUserType', function () {
+            CrCmsBlueprint::integerUserType($this);
+        });
         Blueprint::macro('unsignedBigIntegerDefault', function (...$args) {
             return CrCmsBlueprint::unsignedBigIntegerDefault($this, ...$args);
         });
         Blueprint::macro('unsignedTinyIntegerDefault', function (...$args) {
             return CrCmsBlueprint::unsignedTinyIntegerDefault($this, ...$args);
         });
-        Blueprint::macro('unsignedIntegerDefault', function (...$args) {
+        Blueprint::macro('integerUserType', function (...$args) {
             return CrCmsBlueprint::unsignedIntegerDefault($this, ...$args);
         });
     }
