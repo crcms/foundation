@@ -137,5 +137,8 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
         Blueprint::macro('unsignedTinyIntegerDefault', function (...$args) {
             return CrCmsBlueprint::unsignedTinyIntegerDefault($this, ...$args);
         });
+        Blueprint::macro('unsignedIntegerDefault', function (...$args) {
+            return CrCmsBlueprint::unsignedIntegerDefault($this, ...$args);
+        });
     }
 }
