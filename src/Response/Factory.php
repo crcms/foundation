@@ -264,7 +264,10 @@ class Factory
             $resource->setIncludes($includes);
         }
 
-        if (isset($fields['only'])) {
+        if (isset($fields['scene'])) {
+            $type = 'scene';
+            $fields = $fields['scene'];
+        } else if (isset($fields['only'])) {
             $type = 'only';
             $fields = $fields['only'];
         } elseif (isset($fields['except']) || isset($fields['hide'])) {

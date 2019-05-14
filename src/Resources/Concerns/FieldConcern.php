@@ -24,6 +24,11 @@ trait FieldConcern
     protected $resourceType = 'except';
 
     /**
+     * @var array
+     */
+    protected $scenes = [];
+
+    /**
      * Set the keys that are supposed to be filtered out.
      *
      * @param array $fields
@@ -44,6 +49,19 @@ trait FieldConcern
     public function except(array $fields): self
     {
         return $this->hide($fields);
+    }
+
+    /**
+     * @param string $scene
+     *
+     * @return FieldConcern
+     */
+    public function scene(string $scene): self
+    {
+        $this->resourceFields = $this->scenes[$scene] ?? [];
+        $this->resourceType = 'only';
+
+        return $this;
     }
 
     /**
