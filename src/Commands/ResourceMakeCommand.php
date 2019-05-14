@@ -15,4 +15,13 @@ class ResourceMakeCommand extends BaseResourceMakeCommand
     {
         return $rootNamespace;
     }
+
+    /**
+     *
+     * @return string
+     */
+    public function getStub(): string
+    {
+        return parent::getStub();
+    }
 }
