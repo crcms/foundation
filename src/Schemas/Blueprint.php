@@ -32,6 +32,16 @@ class Blueprint
     /**
      * @param BaseBlueprint $table
      *
+     * @return ColumnDefinition
+     */
+    public static function integerUserType(BaseBlueprint $table): ColumnDefinition
+    {
+        return $table->unsignedTinyInteger('user_type')->default(0);
+    }
+
+    /**
+     * @param BaseBlueprint $table
+     *
      * @return void
      */
     public static function integerSoftDeletes(BaseBlueprint $table): void
