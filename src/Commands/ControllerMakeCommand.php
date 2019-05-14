@@ -13,7 +13,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
      */
     public function getStub(): string
     {
-        return __DIR__.'/stubs/controller.sub';
+        return __DIR__.'/stubs/controller.stub';
     }
 
     /**
