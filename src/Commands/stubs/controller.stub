@@ -13,7 +13,7 @@ use DummyHandlerNamespace\StoreHandler;
 use DummyHandlerNamespace\UpdateHandler;
 use DummyResourceNamespace;
 
-class DocumentController extends AbstractController
+class DummyClass extends AbstractController
 {
     /**
      * @param DataProviderContract $provider
