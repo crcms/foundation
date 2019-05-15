@@ -2,10 +2,10 @@
 
 namespace CrCms\Foundation\Commands;
 
-use Illuminate\Console\Command;
 use Illuminate\Support\Str;
-use Symfony\Component\Console\Input\InputArgument;
+use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputArgument;
 
 class FunctionMakeCommand extends Command
 {
@@ -34,6 +34,7 @@ class FunctionMakeCommand extends Command
 
         if (empty($actions)) {
             $this->error('Action not within the allowable range [store,update,delete,list,show]');
+
             return false;
         }
 
@@ -78,11 +79,11 @@ class FunctionMakeCommand extends Command
             $this->call('make:controller', [
                 'name' => $controller,
                 '--handler' => $handlerPath,
-            ]);//array_merge($appendOptions, ['name' => $controller]));
+            ]); //array_merge($appendOptions, ['name' => $controller]));
         }
 
         if ($this->option('resource')) {
-            $this->call('make:resource', ['name' => $resource]);//array_merge($appendOptions, ['name' => $resource]));
+            $this->call('make:resource', ['name' => $resource]); //array_merge($appendOptions, ['name' => $resource]));
         }
 
         if ($this->option('handler')) {
@@ -121,17 +122,16 @@ class FunctionMakeCommand extends Command
     }
 
     /**
-     *
      * @return array
      */
     protected function getActions(): array
     {
         $option = $this->option('action');
+
         return $option ? explode(',', $option) : ['store', 'update', 'delete', 'list', 'show'];
     }
 
     /**
-     *
      * @return array
      */
     public function getOptions(): array
@@ -159,6 +159,7 @@ class FunctionMakeCommand extends Command
     protected function getNamespace(string $name): string
     {
         $name = str_replace('/', '\\', $name);
+
         return trim(implode('\\', array_slice(explode('\\', $name), 0, -1)), '\\');
     }
 }

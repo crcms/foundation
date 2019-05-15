@@ -29,7 +29,6 @@ class TaskMakeCommand extends GeneratorCommand
     protected $type = 'Task';
 
     /**
-     *
      * @return array
      */
     public function getOptions(): array
@@ -40,7 +39,6 @@ class TaskMakeCommand extends GeneratorCommand
     }
 
     /**
-     *
      * @return string
      */
     protected function getStub()
@@ -48,4 +46,3 @@ class TaskMakeCommand extends GeneratorCommand
         return __DIR__.'/stubs/task.stub';
     }
 }
-

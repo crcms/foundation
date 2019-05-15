@@ -8,14 +8,18 @@ namespace CrCms\Foundation\Helpers;
  *
  * @return string|string[]|null
  */
-function var_export($expression, $return = FALSE)
+function var_export($expression, $return = false)
 {
-    $export = var_export($expression, TRUE);
-    $export = preg_replace("/^([ ]*)(.*)/m", '$1$1$2', $export);
+    $export = var_export($expression, true);
+    $export = preg_replace('/^([ ]*)(.*)/m', '$1$1$2', $export);
     $array = preg_split("/\r\n|\n|\r/", $export);
-    $array = preg_replace(["/\s*array\s\($/", "/\)(,)?$/", "/\s=>\s$/"], [NULL, ']$1', ' => ['], $array);
-    $export = join(PHP_EOL, array_filter(["["] + $array));
-    if ((bool)$return) return $export; else echo $export;
+    $array = preg_replace(["/\s*array\s\($/", "/\)(,)?$/", "/\s=>\s$/"], [null, ']$1', ' => ['], $array);
+    $export = implode(PHP_EOL, array_filter(['['] + $array));
+    if ((bool) $return) {
+        return $export;
+    } else {
+        echo $export;
+    }
 }
 
 /**
@@ -53,7 +57,6 @@ function array_merge_recursive_distinct(): array
 
     return $base;
 }
-
 
 /**
  * @param array
@@ -94,4 +97,3 @@ function array_merge_recursive_adv(): array
 
     return $merged;
 }
-

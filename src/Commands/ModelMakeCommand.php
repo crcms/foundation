@@ -7,7 +7,6 @@ use Illuminate\Foundation\Console\ModelMakeCommand as BaseModelMakeCommand;
 class ModelMakeCommand extends BaseModelMakeCommand
 {
     /**
-     *
      * @return string
      */
     public function getStub(): string

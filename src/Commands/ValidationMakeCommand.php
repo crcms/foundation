@@ -30,7 +30,6 @@ class ValidationMakeCommand extends GeneratorCommand
     protected $type = 'Validation';
 
     /**
-     *
      * @return bool|null
      *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
@@ -42,12 +41,11 @@ class ValidationMakeCommand extends GeneratorCommand
         }
 
         if ($this->option('make-rule')) {
-            $this->call('make:rule', ['name' => str_replace('Rules/','',$this->option('make-rule'))]);
+            $this->call('make:rule', ['name' => str_replace('Rules/', '', $this->option('make-rule'))]);
         }
     }
 
     /**
-     *
      * @return array
      */
     public function getOptions(): array
@@ -73,7 +71,6 @@ class ValidationMakeCommand extends GeneratorCommand
     }
 
     /**
-     *
      * @return string
      */
     protected function parseRule(): string
@@ -92,7 +89,6 @@ class ValidationMakeCommand extends GeneratorCommand
     }
 
     /**
-     *
      * @return string
      */
     protected function parseRuleNamespace(): string
@@ -100,7 +96,7 @@ class ValidationMakeCommand extends GeneratorCommand
         $ruleNamespace = [];
 
         if ($this->option('make-rule')) {
-            $ruleNamespace[] = $this->qualifyClass(str_replace('Rules/','',$this->option('make-rule')));
+            $ruleNamespace[] = $this->qualifyClass(str_replace('Rules/', '', $this->option('make-rule')));
         }
 
         if ($this->option('include-rule')) {
@@ -111,7 +107,6 @@ class ValidationMakeCommand extends GeneratorCommand
     }
 
     /**
-     *
      * @return string
      */
     protected function getStub(): string
@@ -119,4 +114,3 @@ class ValidationMakeCommand extends GeneratorCommand
         return __DIR__.'/stubs/validation.stub';
     }
 }
-

@@ -65,6 +65,7 @@ trait FieldConcern
     {
         $this->scene = $scene;
         $this->resourceType = 'scene';
+
         return $this;
     }
 

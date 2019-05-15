@@ -2,11 +2,11 @@
 
 namespace CrCms\Foundation\Tests\Commands;
 
-use CrCms\Foundation\Commands\HandlerMakeCommand;
+use PHPUnit\Framework\TestCase;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Application;
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\ArgvInput;
+use CrCms\Foundation\Commands\HandlerMakeCommand;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 class HandlerMakeTest extends TestCase
@@ -26,7 +26,6 @@ class HandlerMakeTest extends TestCase
         $this->app = \Mockery::mock($this->app);
         $this->app->shouldReceive('getNamespace')->andReturn('Modules\\');
 
-
         $this->input = new ArgvInput();
         $this->output = new ConsoleOutput();
     }
@@ -38,7 +37,5 @@ class HandlerMakeTest extends TestCase
         $handler->setLaravel($this->app);
         $handler->handle();
         dd($handler);
-
     }
-
 }

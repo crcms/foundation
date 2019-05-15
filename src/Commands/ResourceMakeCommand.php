@@ -17,7 +17,6 @@ class ResourceMakeCommand extends BaseResourceMakeCommand
     }
 
     /**
-     *
      * @return string
      */
     public function getStub(): string
