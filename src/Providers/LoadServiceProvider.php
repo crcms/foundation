@@ -104,9 +104,9 @@ class LoadServiceProvider extends ServiceProvider
         /* @var SplFileInfo $file */
         foreach (Finder::create()->files()->name('*Command.php')->in($this->modulePath()) as $file) {
             $class = $this->fileToClass($file);
-            if ($class && !in_array($class, $this->app['config']->get('mount.commands', []))) {
+            if ($class && ! in_array($class, $this->app['config']->get('mount.commands', []))) {
                 $classReflection = new \ReflectionClass($class);
-                if (!$classReflection->isAbstract()) {
+                if (! $classReflection->isAbstract()) {
                     $this->commands($class);
                 }
             }
@@ -123,7 +123,7 @@ class LoadServiceProvider extends ServiceProvider
 
         foreach (Finder::create()->files()->name('*Schedule.php')->in($this->modulePath()) as $file) {
             $class = $this->fileToClass($file);
-            if ($class && !in_array($class, $this->app['config']->get('mount.schedules', []), true)) {
+            if ($class && ! in_array($class, $this->app['config']->get('mount.schedules', []), true)) {
                 $this->app->make($class)->handle($schedule);
             }
         }

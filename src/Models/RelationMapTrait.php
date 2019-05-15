@@ -2,8 +2,8 @@
 
 namespace CrCms\Foundation\Models;
 
-use Illuminate\Support\Facades\Config;
 use OutOfRangeException;
+use Illuminate\Support\Facades\Config;
 
 trait RelationMapTrait
 {

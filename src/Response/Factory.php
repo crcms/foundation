@@ -267,7 +267,7 @@ class Factory
         if (isset($fields['scene'])) {
             $type = 'scene';
             $fields = $fields['scene'];
-        } else if (isset($fields['only'])) {
+        } elseif (isset($fields['only'])) {
             $type = 'only';
             $fields = $fields['only'];
         } elseif (isset($fields['except']) || isset($fields['hide'])) {

@@ -2,13 +2,13 @@
 
 namespace CrCms\Foundation\Jobs;
 
-use Illuminate\Queue\Jobs\Job;
 use Throwable;
+use Illuminate\Queue\Jobs\Job;
 
 abstract class AbstractJob
 {
     /**
-     * 触发队列方法
+     * 触发队列方法.
      *
      * 如果有错误或者因错误终止执行，请使用异常Exception抛出，这样队列经过最大重试之后会自动删除
      * 不可用return来终止执行否则下次启动队列会重复投递执行，因为队列状态为Unacked
@@ -35,8 +35,8 @@ abstract class AbstractJob
     abstract protected function handle(array $data, Job $job): void;
 
     /**
-     * 当执行失败后执行此方法
-     * 
+     * 当执行失败后执行此方法.
+     *
      * @param array $data
      * @param Throwable $e
      * @return void

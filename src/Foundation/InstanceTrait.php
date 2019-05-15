@@ -10,16 +10,16 @@
 namespace CrCms\Foundation\Foundation;
 
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Bus\Dispatcher;
-use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Queue\Queue as Queue;
-use Illuminate\Contracts\Events\Dispatcher as EventDispatcher;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Auth\Factory as AuthFactory;
 use Illuminate\Contracts\Config\Repository as Config;
-use Illuminate\Contracts\Foundation\Application;
-use InvalidArgumentException;
+use Illuminate\Contracts\Events\Dispatcher as EventDispatcher;
 
 /**
  * @property-read Container|Application $app

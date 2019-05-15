@@ -2,8 +2,8 @@
 
 namespace CrCms\Foundation\Schemas;
 
-use Illuminate\Database\Schema\Blueprint as BaseBlueprint;
 use Illuminate\Database\Schema\ColumnDefinition;
+use Illuminate\Database\Schema\Blueprint as BaseBlueprint;
 
 class Blueprint
 {

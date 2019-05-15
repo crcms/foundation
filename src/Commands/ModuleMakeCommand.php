@@ -41,7 +41,6 @@ class ModuleMakeCommand extends Command
     }
 
     /**
-     *
      * @return void
      *
      * @throws \Illuminate\Contracts\Container\BindingResolutionException

@@ -2,10 +2,10 @@
 
 namespace CrCms\Foundation\Commands;
 
-use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
-use Symfony\Component\Console\Input\InputOption;
 use InvalidArgumentException;
+use Illuminate\Console\GeneratorCommand;
+use Symfony\Component\Console\Input\InputOption;
 
 class HandlerMakeCommand extends GeneratorCommand
 {
@@ -31,7 +31,6 @@ class HandlerMakeCommand extends GeneratorCommand
     protected $type = 'Handler';
 
     /**
-     *
      * @return array
      */
     public function getOptions(): array
@@ -118,7 +117,6 @@ class HandlerMakeCommand extends GeneratorCommand
     }
 
     /**
-     *
      * @return string
      */
     protected function getStub(): string
@@ -137,4 +135,3 @@ class HandlerMakeCommand extends GeneratorCommand
         return __DIR__."/stubs/handler.{$action}stub";
     }
 }
-

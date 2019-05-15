@@ -3,8 +3,8 @@
 namespace CrCms\Foundation\Controllers;
 
 use CrCms\Foundation\Foundation\InstanceTrait;
-use CrCms\Foundation\Response\Factory as ResponseFactory;
 use Illuminate\Routing\Controller as BaseController;
+use CrCms\Foundation\Response\Factory as ResponseFactory;
 
 abstract class AbstractController extends BaseController
 {

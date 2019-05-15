@@ -2,16 +2,16 @@
 
 namespace CrCms\Foundation\Providers;
 
-use CrCms\Foundation\Commands\ControllerMakeCommand;
-use CrCms\Foundation\Commands\FunctionMakeCommand;
-use CrCms\Foundation\Commands\HandlerMakeCommand;
-use CrCms\Foundation\Commands\ModelMakeCommand;
-use CrCms\Foundation\Commands\ModuleMakeCommand;
-use CrCms\Foundation\Commands\ResourceMakeCommand;
+use Illuminate\Database\Schema\Blueprint;
 use CrCms\Foundation\Commands\RuleMakeCommand;
 use CrCms\Foundation\Commands\TaskMakeCommand;
+use CrCms\Foundation\Commands\ModelMakeCommand;
+use CrCms\Foundation\Commands\ModuleMakeCommand;
+use CrCms\Foundation\Commands\HandlerMakeCommand;
+use CrCms\Foundation\Commands\FunctionMakeCommand;
+use CrCms\Foundation\Commands\ResourceMakeCommand;
+use CrCms\Foundation\Commands\ControllerMakeCommand;
 use CrCms\Foundation\Commands\ValidationMakeCommand;
-use Illuminate\Database\Schema\Blueprint;
 use CrCms\Foundation\Schemas\Blueprint as CrCmsBlueprint;
 
 class FoundationServiceProvider extends AbstractModuleServiceProvider
@@ -41,7 +41,6 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
     }
 
     /**
-     *
      * @return void
      *
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
@@ -59,7 +58,6 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
     }
 
     /**
-     *
      * @return void
      */
     protected function extendCommands(): void
@@ -82,7 +80,6 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
     }
 
     /**
-     *
      * @return void
      */
     protected function loadServiceProvider(): void
@@ -93,7 +90,6 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
     }
 
     /**
-     *
      * @return void
      */
     protected function registerCommands(): void
@@ -108,7 +104,6 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
     }
 
     /**
-     *
      * @return void
      *
      * @throws \Illuminate\Contracts\Container\BindingResolutionException

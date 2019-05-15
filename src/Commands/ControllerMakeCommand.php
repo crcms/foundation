@@ -2,13 +2,12 @@
 
 namespace CrCms\Foundation\Commands;
 
-use Illuminate\Routing\Console\ControllerMakeCommand as BaseControllerMakeCommand;
 use Symfony\Component\Console\Input\InputOption;
+use Illuminate\Routing\Console\ControllerMakeCommand as BaseControllerMakeCommand;
 
 class ControllerMakeCommand extends BaseControllerMakeCommand
 {
     /**
-     *
      * @return string
      */
     public function getStub(): string
@@ -39,6 +38,7 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
             $handlerNamespace = $this->getNamespace($this->qualifyClass($handler)).'';
             $resourceNamespace = $this->getNamespace($this->getNamespace($handlerNamespace)).'\Resources\\'.basename($handler).'Resource';
             $resourceClass = class_basename($resourceNamespace);
+
             return str_replace(
                 ['DummyHandlerNamespace', 'DummyResourceNamespace', 'DummyResourceClass'],
                 [$handlerNamespace, $resourceNamespace, $resourceClass],
@@ -50,15 +50,15 @@ class ControllerMakeCommand extends BaseControllerMakeCommand
     }
 
     /**
-     *
      * @return array
      */
     public function getOptions()
     {
         $options = parent::getOptions();
         $options[] = [
-            'handler', null, InputOption::VALUE_OPTIONAL, 'Generate a resource controller for the given handler.'
+            'handler', null, InputOption::VALUE_OPTIONAL, 'Generate a resource controller for the given handler.',
         ];
+
         return $options;
     }
 }

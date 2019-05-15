@@ -2,9 +2,9 @@
 
 namespace CrCms\Foundation\Providers;
 
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 abstract class AbstractModuleServiceProvider extends ServiceProvider
 {
@@ -19,14 +19,14 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
     protected $name;
 
     /**
-     * Default model relation mappings
+     * Default model relation mappings.
      *
      * @var array
      */
     protected $relationMappings = [];
 
     /**
-     * loadDefaultMigrations
+     * loadDefaultMigrations.
      *
      * @param string $path
      * @return void
@@ -40,7 +40,7 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
     }
 
     /**
-     * loadDefaultTranslations
+     * loadDefaultTranslations.
      *
      * @param string $path
      * @return void
@@ -54,7 +54,7 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
     }
 
     /**
-     * loadDefaultRoutes
+     * loadDefaultRoutes.
      *
      * @return void
      */
@@ -68,7 +68,7 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
     }
 
     /**
-     * mergeDefaultConfig
+     * mergeDefaultConfig.
      *
      * @param string $path
      * @return void
@@ -86,20 +86,20 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
     }
 
     /**
-     * Merge relation mappings
+     * Merge relation mappings.
      *
      * @return void
      */
     protected function loadRelationMapping(): void
     {
-        $allMappings = $this->app['config']->get("foundation.model_relation_mappings", []);
+        $allMappings = $this->app['config']->get('foundation.model_relation_mappings', []);
 
         $relationMappings = array_merge(
             $this->relationMappings,
             Arr::only($allMappings, array_keys($this->relationMappings))
         );
 
-        $this->app['config']->set("foundation.model_relation_mappings", array_merge($allMappings, $relationMappings));
+        $this->app['config']->set('foundation.model_relation_mappings', array_merge($allMappings, $relationMappings));
 
         Relation::morphMap($relationMappings);
     }
@@ -115,7 +115,7 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
     }
 
     /**
-     * isLumen
+     * isLumen.
      *
      * @return bool
      */
