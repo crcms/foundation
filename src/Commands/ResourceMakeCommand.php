@@ -22,6 +22,8 @@ class ResourceMakeCommand extends BaseResourceMakeCommand
      */
     public function getStub(): string
     {
-        return parent::getStub();
+        return $this->collection()
+            ? __DIR__.'/stubs/resource-collection.stub'
+            : __DIR__.'/stubs/resource.stub';
     }
 }
