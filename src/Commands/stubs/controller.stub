@@ -51,7 +51,7 @@ class DummyClass extends AbstractController
     {
         return $this->response->resource(
             $this->make(ShowHandler::class)->handle($provider),
-            DocumentResource::class
+            DummyResourceClass::class
             );
     }
 
