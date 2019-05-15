@@ -24,7 +24,7 @@ class DummyClass extends AbstractController
     {
         return $this->response->paginator(
             $this->make(ListHandler::class)->handle($provider),
-            DummyResourceClass::class,
+            DummyResourceClass::class
             );
     }
 
@@ -51,7 +51,7 @@ class DummyClass extends AbstractController
     {
         return $this->response->resource(
             $this->make(ShowHandler::class)->handle($provider),
-            DocumentResource::class,
+            DocumentResource::class
             );
     }
 
