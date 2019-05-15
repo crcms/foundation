@@ -72,11 +72,11 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
             return new ControllerMakeCommand($app['files']);
         });
 
-        $this->app->singleton('command.model.make', function ($object, $app) {
+        $this->app->extend('command.model.make', function ($object, $app) {
             return new ModelMakeCommand($app['files']);
         });
 
-        $this->app->singleton('command.rule.make', function ($object, $app) {
+        $this->app->extend('command.rule.make', function ($object, $app) {
             return new RuleMakeCommand($app['files']);
         });
     }
