@@ -29,6 +29,6 @@ final class DummyClass extends AbstractHandler
      */
     public function handle(DummyValidationClass $provider): DummyModelClass
     {
-        return $this->repository->create($provider->all(), intval($provider->get('DummySegment')));
+        return $this->repository->update($provider->all(), intval($provider->get('DummySegment')));
     }
 }
