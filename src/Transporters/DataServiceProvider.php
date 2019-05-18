@@ -9,6 +9,7 @@
 
 namespace CrCms\Foundation\Transporters;
 
+use CrCms\Foundation\Framework;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
@@ -57,7 +58,7 @@ class DataServiceProvider extends ServiceProvider
         $params = $request->all();
 
         if ($request instanceof Request) {
-            $routeParams = $request->route()->parameters();
+            $routeParams = Framework::isLumen() ? $request->route() : $request->route()->parameters();
             $params = array_merge($params, $routeParams);
         }
 
