@@ -13,6 +13,8 @@ use CrCms\Foundation\Resources\Resource;
 use CrCms\Foundation\Resources\ResourceCollection;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Contracts\Routing\ResponseFactory as FactoryContract;
+use Laravel\Lumen\Http\ResponseFactory as LumenResponseFactory;
+use DomainException;
 
 class Factory
 {
@@ -22,12 +24,19 @@ class Factory
     protected $factory;
 
     /**
-     * ResponseFactory constructor.
-     * @param FactoryContract $factory
+     * @param FactoryContract|LumenResponseFactory $factory
+     *
+     * @return $this
      */
-    public function __construct(FactoryContract $factory)
+    public function setFactory($factory)
     {
+        if ((!$factory instanceof FactoryContract) && (!$factory instanceof LumenResponseFactory)) {
+            throw new DomainException("The factory not allow");
+        }
+
         $this->factory = $factory;
+
+        return $this;
     }
 
     /**
