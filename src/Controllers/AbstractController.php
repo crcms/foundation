@@ -68,7 +68,7 @@ if (class_exists(\Laravel\Lumen\Routing\Controller::class)) {
          */
         protected function response(): ResponseFactory
         {
-            return $this->make(ResponseFactory::class)->setFactory($this->make(\Illuminate\Contracts\Routing\ResponseFactory));
+            return $this->make(ResponseFactory::class)->setFactory($this->make(\Illuminate\Contracts\Routing\ResponseFactory::class));
         }
     }
 }
