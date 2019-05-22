@@ -58,7 +58,12 @@ class DataServiceProvider extends ServiceProvider
         $params = $request->all();
 
         if ($request instanceof Request) {
-            $routeParams = Framework::isLumen() ? $request->route() : $request->route()->parameters();
+            if (Framework::isLumen()) {
+                $routeDetailParams = $request->route()[2] ?? [];
+                $routeParams = array_merge($routeDetailParams, $request->route());
+            } else {
+                $routeParams = $request->route()->parameters();
+            }
             $params = array_merge($params, $routeParams);
         }
 
