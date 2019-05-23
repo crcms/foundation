@@ -3,7 +3,7 @@
 namespace CrCms\Foundation\Jobs;
 
 use Throwable;
-use Illuminate\Queue\Jobs\Job;
+use Illuminate\Contracts\Queue\Job;
 
 abstract class AbstractJob
 {
