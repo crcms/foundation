@@ -269,7 +269,7 @@ class Factory
      */
     protected function resourceToResponse($resource, array $fields, array $includes = []): JsonResponse
     {
-        if ($includes && $resource instanceof Resource) {
+        if ($includes && method_exists($resource, 'setIncludes')) {
             $resource->setIncludes($includes);
         }
 
