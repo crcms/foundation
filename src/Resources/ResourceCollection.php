@@ -2,6 +2,7 @@
 
 namespace CrCms\Foundation\Resources;
 
+use CrCms\Foundation\Resources\Concerns\IncludeConcern;
 use Illuminate\Http\Request;
 use CrCms\Foundation\Resources\Concerns\FieldConcern;
 use Illuminate\Http\Resources\Json\ResourceCollection as BaseResourceCollection;
@@ -11,7 +12,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection as BaseResourceCollection;
  */
 class ResourceCollection extends BaseResourceCollection
 {
-    use FieldConcern;
+    use FieldConcern, IncludeConcern;
 
     /**
      * ResourceCollection constructor.
@@ -32,7 +33,7 @@ class ResourceCollection extends BaseResourceCollection
     {
         return $this->collection->map(function (Resource $resource) use ($request) {
             return ($this->resourceType === 'scene' ? $resource->{$this->resourceType}($this->scene) :
-                $resource->{$this->resourceType}($this->resourceFields))->resolve($request);
+                $resource->setIncludes($this->includes)->{$this->resourceType}($this->resourceFields))->resolve($request);
         })->all();
     }
 }
