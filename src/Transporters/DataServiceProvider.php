@@ -9,21 +9,14 @@
 
 namespace CrCms\Foundation\Transporters;
 
-use CrCms\Foundation\Transporters\Contracts\DataProviderContract;
-use Illuminate\Contracts\Validation\ValidatesWhenResolved;
+use CrCms\Foundation\Framework;
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Validation\ValidatesWhenResolved;
+use CrCms\Foundation\Transporters\Contracts\DataProviderContract;
 
-/**
- * Class DataServiceProvider
- * @package CrCms\Microservice\Transporters
- */
 class DataServiceProvider extends ServiceProvider
 {
-    /**
-     * @var bool
-     */
-    protected $defer = true;
-
     /**
      * Bootstrap any application services.
      *
@@ -36,7 +29,7 @@ class DataServiceProvider extends ServiceProvider
         });
 
         $this->app->resolving(AbstractValidateDataProvider::class, function (AbstractValidateDataProvider $dataProvider, $app) {
-            $dataProvider->setObject($app['request']->all());
+            $dataProvider->setObject($this->resolveRequestData($app['request']));
         });
     }
 
@@ -50,8 +43,31 @@ class DataServiceProvider extends ServiceProvider
         $this->registerAlias();
 
         $this->app->bind('data.provider', function ($app) {
-            return new DataProvider($app['request']->all());
+            return new DataProvider($this->resolveRequestData($app['request']));
         });
+    }
+
+    /**
+     * resolveRequestData.
+     *
+     * @param $request
+     * @return array
+     */
+    protected function resolveRequestData($request): array
+    {
+        $params = $request->all();
+
+        if ($request instanceof Request) {
+            if (Framework::isLumen()) {
+                $routeDetailParams = $request->route()[2] ?? [];
+                $routeParams = array_merge($routeDetailParams, $request->route());
+            } else {
+                $routeParams = $request->route()->parameters();
+            }
+            $params = array_merge($params, $routeParams);
+        }
+
+        return $params;
     }
 
     /**
@@ -65,13 +81,5 @@ class DataServiceProvider extends ServiceProvider
                  ] as $alias) {
             $this->app->alias('data.provider', $alias);
         }
-    }
-
-    /**
-     * @return array
-     */
-    public function provides(): array
-    {
-        return ['data.provider'];
     }
 }

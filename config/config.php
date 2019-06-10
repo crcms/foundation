@@ -12,7 +12,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Whether to enable automatic mount
+    | Whether to enable automatic load
     |--------------------------------------------------------------------------
     |
     | If enabled, the directory or file contained in the main module will be automatically scanned and loaded automatically.
@@ -21,5 +21,14 @@ return [
     |
     */
 
-    'auto_mount' => true,
+    'load' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Model relation alias mapping
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    'model_relation_mappings' => [],
 ];

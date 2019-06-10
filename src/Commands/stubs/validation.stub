@@ -1,0 +1,14 @@
+<?php
+
+namespace DummyNamespace;
+
+use CrCms\Foundation\Transporters\AbstractValidateDataProvider;
+DummyRuleNamespace
+
+class DummyClass extends AbstractValidateDataProvider
+{
+    public function rules(): array
+    {
+        return DummyRule;
+    }
+}

@@ -1,0 +1,81 @@
+<?php
+
+namespace DummyNamespace;
+
+use CrCms\Foundation\Controllers\AbstractController;
+use CrCms\Foundation\Transporters\Contracts\DataProviderContract;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
+use DummyHandlerNamespace\DeleteHandler;
+use DummyHandlerNamespace\ListHandler;
+use DummyHandlerNamespace\ShowHandler;
+use DummyHandlerNamespace\StoreHandler;
+use DummyHandlerNamespace\UpdateHandler;
+use DummyResourceNamespace;
+
+class DummyClass extends AbstractController
+{
+    /**
+     * @param DataProviderContract $provider
+     *
+     * @return JsonResponse
+     */
+    public function index(DataProviderContract $provider): JsonResponse
+    {
+        return $this->response->paginator(
+            $this->make(ListHandler::class)->handle($provider),
+            DummyResourceClass::class
+            );
+    }
+
+    /**
+     * @param DataProviderContract $provider
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(DataProviderContract $provider): JsonResponse
+    {
+        $model = $this->make(StoreHandler::class)->handle($provider);
+
+        return $this->response->resource($model, DummyResourceClass::class);
+    }
+
+    /**
+     * @param DataProviderContract $provider
+     *
+     * @return JsonResponse
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
+    public function show(DataProviderContract $provider): JsonResponse
+    {
+        return $this->response->resource(
+            $this->make(ShowHandler::class)->handle($provider),
+            DummyResourceClass::class
+            );
+    }
+
+    /**
+     * @param DataProviderContract $provider
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(DataProviderContract $provider): JsonResponse
+    {
+        $model = $this->make(UpdateHandler::class)->handle($provider);
+
+        return $this->response->resource($model, DummyResourceClass::class);
+    }
+
+    /**
+     * @param DataProviderContract $provider
+     *
+     * @return Response
+     */
+    public function destroy(DataProviderContract $provider): Response
+    {
+        $this->make(DeleteHandler::class)->handle($provider);
+
+        return $this->response->noContent();
+    }
+}

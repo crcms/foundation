@@ -1,0 +1,10 @@
+<?php
+
+namespace DummyNamespace;
+
+use CrCms\Foundation\Models\AbstractModel;
+
+class DummyClass extends AbstractModel
+{
+    //
+}

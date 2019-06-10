@@ -1,0 +1,18 @@
+<?php
+
+namespace DummyNamespace;
+
+use CrCms\Foundation\Tasks\AbstractTask;
+
+final class DummyClass extends AbstractTask
+{
+    /**
+     * @param mixed ...$params
+     *
+     * @return mixed
+     */
+    public function handle(...$params)
+    {
+
+    }
+}

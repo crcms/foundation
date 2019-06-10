@@ -2,14 +2,14 @@
 
 namespace CrCms\Foundation\Resources;
 
-use CrCms\Foundation\Resources\Concerns\FieldConcern;
-use CrCms\Foundation\Resources\Concerns\IncludeConcern;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use CrCms\Foundation\Resources\Concerns\FieldConcern;
+use CrCms\Foundation\Resources\Concerns\IncludeConcern;
 use Illuminate\Http\Resources\Json\Resource as BaseResource;
-use Illuminate\Support\Collection;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class Resource extends BaseResource
 {
@@ -35,7 +35,7 @@ class Resource extends BaseResource
             $data = $data->jsonSerialize();
         }
 
-        return $this->filter((array)$data);
+        return $this->filter((array) $data);
     }
 
     /**

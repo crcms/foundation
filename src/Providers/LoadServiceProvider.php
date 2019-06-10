@@ -9,17 +9,16 @@
 
 namespace CrCms\Foundation\Providers;
 
-use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Symfony\Component\Finder\Finder;
+use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Finder\SplFileInfo;
+use Illuminate\Console\Scheduling\Schedule;
 
 /**
- * Class MountServiceProvider
- * @package CrCms\Microservice\Foundation
+ * Class MountServiceProvider.
  */
-class MountServiceProvider extends ServiceProvider
+class LoadServiceProvider extends ServiceProvider
 {
     /**
      * @return void
@@ -46,7 +45,7 @@ class MountServiceProvider extends ServiceProvider
     }
 
     /**
-     * Merge config
+     * Merge config.
      *
      * @return void
      */
@@ -54,7 +53,7 @@ class MountServiceProvider extends ServiceProvider
     {
         /* @var SplFileInfo $directory */
         /* @var SplFileInfo $file */
-        foreach (Finder::create()->directories()->name('Config')->in($this->modulePath()) as $directory) {
+        foreach (Finder::create()->directories()->depth(1)->name('Config')->in($this->modulePath()) as $directory) {
             foreach (Finder::create()->files()->name('*.php')->in($directory->getPathname()) as $file) {
                 $this->mergeConfigFrom($file->getPathname(), Str::snake($directory->getRelativePath()));
             }
@@ -67,7 +66,7 @@ class MountServiceProvider extends ServiceProvider
     protected function scanLoadMigrations(): void
     {
         /* @var SplFileInfo $directory */
-        foreach (Finder::create()->directories()->name('Migrations')->in($this->modulePath()) as $directory) {
+        foreach (Finder::create()->directories()->depth(1)->name('Migrations')->in($this->modulePath()) as $directory) {
             $this->loadMigrationsFrom($directory->getPathname());
         }
     }
@@ -78,7 +77,7 @@ class MountServiceProvider extends ServiceProvider
     protected function scanLoadTranslations(): void
     {
         /* @var SplFileInfo $directory */
-        foreach (Finder::create()->directories()->name('Translations')->in($this->modulePath()) as $directory) {
+        foreach (Finder::create()->directories()->depth(1)->name('Translations')->in($this->modulePath()) as $directory) {
             $this->loadTranslationsFrom($directory->getPathname(), Str::snake($directory->getRelativePath()));
         }
     }
@@ -90,9 +89,9 @@ class MountServiceProvider extends ServiceProvider
     {
         /* @var SplFileInfo $directory */
         /* @var SplFileInfo $file */
-        foreach (Finder::create()->directories()->name('Routes')->in($this->modulePath()) as $directory) {
+        foreach (Finder::create()->directories()->depth(1)->name('Routes')->in($this->modulePath()) as $directory) {
             foreach (Finder::create()->files()->name('*.php')->in($directory->getPathname()) as $file) {
-                require $file->getPathname();
+                $this->loadRoutesFrom($file->getPathname());
             }
         }
     }
@@ -105,8 +104,11 @@ class MountServiceProvider extends ServiceProvider
         /* @var SplFileInfo $file */
         foreach (Finder::create()->files()->name('*Command.php')->in($this->modulePath()) as $file) {
             $class = $this->fileToClass($file);
-            if ($class && !in_array($class, $this->app['config']->get('mount.commands', []))) {
-                $this->commands($class);
+            if ($class && ! in_array($class, $this->app['config']->get('mount.commands', []))) {
+                $classReflection = new \ReflectionClass($class);
+                if (! $classReflection->isAbstract()) {
+                    $this->commands($class);
+                }
             }
         }
     }
@@ -121,7 +123,7 @@ class MountServiceProvider extends ServiceProvider
 
         foreach (Finder::create()->files()->name('*Schedule.php')->in($this->modulePath()) as $file) {
             $class = $this->fileToClass($file);
-            if ($class && !in_array($class, $this->app['config']->get('mount.schedules', []), true)) {
+            if ($class && ! in_array($class, $this->app['config']->get('mount.schedules', []), true)) {
                 $this->app->make($class)->handle($schedule);
             }
         }
@@ -142,12 +144,10 @@ class MountServiceProvider extends ServiceProvider
                 return $class;
             }
         }
-
-        return null;
     }
 
     /**
-     * modulePath
+     * modulePath.
      *
      * @return string
      */

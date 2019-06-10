@@ -2,16 +2,20 @@
 
 namespace CrCms\Foundation\Providers;
 
+use Illuminate\Database\Schema\Blueprint;
+use CrCms\Foundation\Commands\RuleMakeCommand;
+use CrCms\Foundation\Commands\TaskMakeCommand;
+use CrCms\Foundation\Commands\ModelMakeCommand;
 use CrCms\Foundation\Commands\ModuleMakeCommand;
-use Illuminate\Support\ServiceProvider;
+use CrCms\Foundation\Commands\HandlerMakeCommand;
+use CrCms\Foundation\Commands\FunctionMakeCommand;
+use CrCms\Foundation\Commands\ResourceMakeCommand;
+use CrCms\Foundation\Commands\ControllerMakeCommand;
+use CrCms\Foundation\Commands\ValidationMakeCommand;
+use CrCms\Foundation\Schemas\Blueprint as CrCmsBlueprint;
 
-class FoundationServiceProvider extends ServiceProvider
+class FoundationServiceProvider extends AbstractModuleServiceProvider
 {
-    /**
-     * @var bool
-     */
-    protected $defer = false;
-
     /**
      * @var string
      */
@@ -23,33 +27,115 @@ class FoundationServiceProvider extends ServiceProvider
     protected $name = 'foundation';
 
     /**
-     * boot
+     * boot.
      *
      * @return void
      */
     public function boot(): void
     {
-        $this->publishes([
-            $this->basePath.'config/config.php' => $this->app->configPath("{$this->name}.php")
+        if (method_exists($this,'configPath')) {
+            $this->publishes([
+                $this->basePath('config/config.php') => $this->app->configPath("{$this->name}.php"),
+            ]);
+        }
+        
+        $this->extendCommands();
+    }
+
+    /**
+     * @return void
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws \ReflectionException
+     */
+    public function register(): void
+    {
+        $this->mergeDefaultConfig();
+
+        $this->registerCommands();
+
+        $this->loadServiceProvider();
+
+        $this->loadBlueprint();
+    }
+
+    /**
+     * @return void
+     */
+    protected function extendCommands(): void
+    {
+        $this->app->extend('command.resource.make', function ($object, $app) {
+            return new ResourceMakeCommand($app['files']);
+        });
+
+        $this->app->extend('command.controller.make', function ($object, $app) {
+            return new ControllerMakeCommand($app['files']);
+        });
+
+        $this->app->extend('command.model.make', function ($object, $app) {
+            return new ModelMakeCommand($app['files']);
+        });
+
+        $this->app->extend('command.rule.make', function ($object, $app) {
+            return new RuleMakeCommand($app['files']);
+        });
+    }
+
+    /**
+     * @return void
+     */
+    protected function loadServiceProvider(): void
+    {
+        if ($this->app['config']->get('foundation.load', false)) {
+            $this->app->register(LoadServiceProvider::class);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function registerCommands(): void
+    {
+        $this->commands([
+            ModuleMakeCommand::class,
+            HandlerMakeCommand::class,
+            TaskMakeCommand::class,
+            ValidationMakeCommand::class,
+            FunctionMakeCommand::class,
         ]);
     }
 
     /**
-     * register
-     *
      * @return void
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws \ReflectionException
      */
-    public function register(): void
+    protected function loadBlueprint(): void
     {
-        $configPath = $this->basePath."config/config.php";
-        if (file_exists($configPath)) {
-            $this->mergeConfigFrom($configPath, $this->name);
-        }
-
-        $this->commands([ModuleMakeCommand::class]);
-
-        if ($this->app['config']->get('foundation.auto_mount', false)) {
-            $this->app->register(MountServiceProvider::class);
-        }
+        Blueprint::macro('integerTimestamps', function () {
+            CrCmsBlueprint::integerTimestamps($this);
+        });
+        Blueprint::macro('integerUids', function () {
+            CrCmsBlueprint::integerUids($this);
+        });
+        Blueprint::macro('integerSoftDeletes', function () {
+            CrCmsBlueprint::integerSoftDeletes($this);
+        });
+        Blueprint::macro('integerSoftDeleteUid', function () {
+            CrCmsBlueprint::integerSoftDeleteUid($this);
+        });
+        Blueprint::macro('integerUserType', function () {
+            return CrCmsBlueprint::integerUserType($this);
+        });
+        Blueprint::macro('unsignedBigIntegerDefault', function (...$args) {
+            return CrCmsBlueprint::unsignedBigIntegerDefault($this, ...$args);
+        });
+        Blueprint::macro('unsignedTinyIntegerDefault', function (...$args) {
+            return CrCmsBlueprint::unsignedTinyIntegerDefault($this, ...$args);
+        });
+        Blueprint::macro('unsignedIntegerDefault', function (...$args) {
+            return CrCmsBlueprint::unsignedIntegerDefault($this, ...$args);
+        });
     }
 }

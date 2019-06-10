@@ -9,18 +9,16 @@
 
 namespace CrCms\Foundation\Transporters;
 
-use CrCms\Foundation\Transporters\Concerns\InteractsWithData;
-use CrCms\Foundation\Transporters\Contracts\DataProviderContract;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Http\Request;
+use ArrayAccess;
 use DomainException;
 use Illuminate\Support\Arr;
-use ArrayAccess;
 use Illuminate\Support\Collection;
+use Illuminate\Contracts\Support\Arrayable;
+use CrCms\Foundation\Transporters\Concerns\InteractsWithData;
+use CrCms\Foundation\Transporters\Contracts\DataProviderContract;
 
 /**
- * Class AbstractDataProvider
- * @package CrCms\Foundation\Transporters
+ * Class AbstractDataProvider.
  */
 abstract class AbstractDataProvider implements DataProviderContract, ArrayAccess
 {
@@ -42,7 +40,7 @@ abstract class AbstractDataProvider implements DataProviderContract, ArrayAccess
      */
     public function __construct($object = null)
     {
-        if (!is_null($object)) {
+        if (! is_null($object)) {
             $this->setObject($object);
         }
     }
@@ -55,6 +53,7 @@ abstract class AbstractDataProvider implements DataProviderContract, ArrayAccess
     {
         $this->source = $object;
         $this->data = $this->resolveData($object);
+
         return $this;
     }
 
@@ -179,8 +178,8 @@ abstract class AbstractDataProvider implements DataProviderContract, ArrayAccess
      */
     public function __get(string $name)
     {
-        if ((bool)$value = $this->has($name)) {
-            return $value;
+        if ($this->has($name)) {
+            return $this->get($name);
         }
 
         throw new DomainException("The param[{$name}] not found");
@@ -199,7 +198,7 @@ abstract class AbstractDataProvider implements DataProviderContract, ArrayAccess
         } elseif (is_object($object)) {
             return get_object_vars($object);
         } else {
-            throw new DomainException("The object range error");
+            throw new DomainException('The object range error');
         }
     }
 }

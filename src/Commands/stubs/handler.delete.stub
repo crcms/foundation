@@ -1,0 +1,33 @@
+<?php
+
+namespace DummyNamespace;
+
+use CrCms\Foundation\Handlers\AbstractHandler;
+use DummyFullValidationClass;
+use DummyFullRepositoryClass;
+
+final class DummyClass extends AbstractHandler
+{
+    /**
+     * @var DummyRepositoryClass
+     */
+    protected $repository;
+
+    /**
+     * @param DummyRepositoryClass $repository
+     */
+    public function __construct(DummyRepositoryClass $repository)
+    {
+        $this->repository = $repository;
+    }
+
+    /**
+     * @param DummyValidationClass $provider
+     *
+     * @return int
+     */
+    public function handle(DummyValidationClass $provider): int
+    {
+        return $this->repository->delete(intval($provider->get('DummySegment')));
+    }
+}
