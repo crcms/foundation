@@ -30,7 +30,7 @@ class Factory
      */
     public function setFactory($factory)
     {
-        if ((!$factory instanceof FactoryContract) && (!$factory instanceof LumenResponseFactory)) {
+        if ((! $factory instanceof FactoryContract) && (! $factory instanceof LumenResponseFactory)) {
             throw new DomainException("The factory not allow");
         }
 
@@ -141,34 +141,35 @@ class Factory
         return $this->collection($paginator, $collect, $fields, $includes);
     }
 
-    /***
-     * @param $message
-     * @param $statusCode
-     * @throw HttpException
+    /**
+     * @param string $message
+     * @param int $statusCode
+     *
+     * @throws HttpException
+     *
+     * @return void
      */
-    public function error($message, $statusCode): HttpException
+    public function error(string $message, int $statusCode): void
     {
         throw new HttpException($statusCode, $message);
     }
 
     /**
      * @param string $message
+     *
+     * @return void
      */
-    public function errorNotFound($message = 'Not Found')
+    public function errorNotFound(string $message = 'Not Found'): void
     {
         $this->error($message, 404);
     }
 
     /**
-     * Return a 400 bad request error.
-     *
      * @param string $message
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      *
      * @return void
      */
-    public function errorBadRequest($message = 'Bad Request')
+    public function errorBadRequest(string $message = 'Bad Request'): void
     {
         $this->error($message, 400);
     }
@@ -182,7 +183,7 @@ class Factory
      *
      * @return void
      */
-    public function errorForbidden($message = 'Forbidden')
+    public function errorForbidden(string $message = 'Forbidden'): void
     {
         $this->error($message, 403);
     }
@@ -196,7 +197,7 @@ class Factory
      *
      * @return void
      */
-    public function errorInternal($message = 'Internal Error')
+    public function errorInternal(string $message = 'Internal Error'): void
     {
         $this->error($message, 500);
     }
@@ -210,7 +211,7 @@ class Factory
      *
      * @return void
      */
-    public function errorUnauthorized($message = 'Unauthorized')
+    public function errorUnauthorized(string $message = 'Unauthorized'): void
     {
         $this->error($message, 401);
     }
@@ -224,14 +225,15 @@ class Factory
      *
      * @return void
      */
-    public function errorMethodNotAllowed($message = 'Method Not Allowed')
+    public function errorMethodNotAllowed(string $message = 'Method Not Allowed'): void
     {
         $this->error($message, 405);
     }
 
     /**
      * @param array $array
-     * @return Response
+     *
+     * @return JsonResponse
      */
     public function array(array $array): JsonResponse
     {
@@ -239,14 +241,13 @@ class Factory
     }
 
     /**
-     * @param array|Collection|JsonSerializable|Traversable $data
+     * @param array|Collection|JsonSerializable|Traversable|mixed $data
      * @param string $key
      * @return JsonResponse
      */
     public function data($data, string $key = 'data'): JsonResponse
     {
-        if (is_array($data)) {
-        } elseif ($data instanceof Collection) {
+        if ($data instanceof Collection) {
             $data = $data->all();
         } elseif ($data instanceof JsonSerializable) {
             $data = $data->jsonSerialize();
@@ -254,11 +255,18 @@ class Factory
             $data = iterator_to_array($data);
         } elseif (is_object($data)) {
             $data = get_object_vars($data);
-        } else {
-            throw new InvalidArgumentException('Incorrect parameter format');
         }
 
         return $this->array([$key => $data]);
+    }
+
+    /**
+     *
+     * @return JsonResponse
+     */
+    public function null(): JsonResponse
+    {
+        return new JsonResponse();
     }
 
     /**
@@ -295,7 +303,7 @@ class Factory
      * @param string $method
      * @param array $parameters
      *
-     * @throws \BadMethodCallException
+     * @throws BadMethodCallException
      *
      * @return mixed
      */
