@@ -2,9 +2,9 @@
 
 namespace CrCms\Foundation\Response;
 
+use Illuminate\Support\Traits\ForwardsCalls;
 use Traversable;
 use JsonSerializable;
-use BadMethodCallException;
 use Illuminate\Http\Response;
 use InvalidArgumentException;
 use Illuminate\Http\JsonResponse;
@@ -18,6 +18,8 @@ use DomainException;
 
 class Factory
 {
+    use ForwardsCalls;
+
     /**
      * @var FactoryContract
      */
@@ -298,21 +300,13 @@ class Factory
     }
 
     /**
-     * Call magic methods beginning with "with".
-     *
      * @param string $method
      * @param array $parameters
-     *
-     * @throws BadMethodCallException
      *
      * @return mixed
      */
     public function __call(string $method, array $parameters)
     {
-        if (method_exists($this->factory, $method)) {
-            return call_user_func_array([$this->factory, $method], $parameters);
-        }
-
-        throw new BadMethodCallException('Undefined method '.get_class($this).'::'.$method);
+        return $this->forwardCallTo($this->factory, $method, $parameters);
     }
 }
