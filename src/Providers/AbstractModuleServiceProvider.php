@@ -11,7 +11,7 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
     /**
      * @var string
      */
-    protected $basePath;
+    protected $basePath = __DIR__.'/../../';
 
     /**
      * @var string
@@ -54,7 +54,7 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
     }
 
     /**
-     * loadDefaultRoutes.
+     * @param string $path
      *
      * @return void
      */
@@ -68,10 +68,11 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
     }
 
     /**
-     * mergeDefaultConfig.
-     *
      * @param string $path
+     *
      * @return void
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     protected function mergeDefaultConfig(string $path = 'config/config.php'): void
     {
@@ -115,12 +116,13 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
     }
 
     /**
-     * isLumen.
      *
      * @return bool
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     protected function isLumen(): bool
     {
-        return $this->app instanceof \Laravel\Lumen\Application;
+        return $this->app->make('foundation')->isLumen();
     }
 }

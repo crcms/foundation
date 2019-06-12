@@ -2,6 +2,7 @@
 
 namespace CrCms\Foundation\Providers;
 
+use CrCms\Foundation\Foundation\Foundation;
 use Illuminate\Database\Schema\Blueprint;
 use CrCms\Foundation\Commands\RuleMakeCommand;
 use CrCms\Foundation\Commands\TaskMakeCommand;
@@ -33,30 +34,41 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
      */
     public function boot(): void
     {
-        if (method_exists($this,'configPath')) {
+        if (method_exists($this, 'configPath')) {
             $this->publishes([
                 $this->basePath('config/config.php') => $this->app->configPath("{$this->name}.php"),
             ]);
         }
-        
+
         $this->extendCommands();
     }
 
     /**
+     *
      * @return void
      *
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     * @throws \ReflectionException
      */
     public function register(): void
     {
         $this->mergeDefaultConfig();
+
+        $this->registerAlias();
 
         $this->registerCommands();
 
         $this->loadServiceProvider();
 
         $this->loadBlueprint();
+    }
+
+    /**
+     *
+     * @return void
+     */
+    protected function registerAlias(): void
+    {
+        $this->app->alias('foundation', Foundation::class);
     }
 
     /**
@@ -107,9 +119,6 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
 
     /**
      * @return void
-     *
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     * @throws \ReflectionException
      */
     protected function loadBlueprint(): void
     {
