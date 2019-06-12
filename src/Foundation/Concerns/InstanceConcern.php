@@ -7,10 +7,8 @@
  * @copyright Copyright &copy; 2018 Rights Reserved CRCMS
  */
 
-namespace CrCms\Foundation\Foundation;
+namespace CrCms\Foundation\Foundation\Concerns;
 
-use Illuminate\Support\Str;
-use InvalidArgumentException;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Bus\Dispatcher;
@@ -20,6 +18,8 @@ use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Auth\Factory as AuthFactory;
 use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Contracts\Events\Dispatcher as EventDispatcher;
+use Illuminate\Support\Str;
+use InvalidArgumentException;
 
 /**
  * @property-read Container|Application $app
@@ -30,8 +30,9 @@ use Illuminate\Contracts\Events\Dispatcher as EventDispatcher;
  * @property-read AuthFactory $auth
  * @property-read Dispatcher $dispatcher
  * @property-read Guard $guard
+ * @property-read \Illuminate\Contracts\Auth\Authenticatable|null $user
  */
-trait InstanceTrait
+trait InstanceConcern
 {
     /**
      * @return Container|Application
@@ -70,6 +71,8 @@ trait InstanceTrait
 
     /**
      * @return EventDispatcher
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function event(): EventDispatcher
     {
@@ -78,6 +81,8 @@ trait InstanceTrait
 
     /**
      * @return Dispatcher
+     *
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function dispatcher(): Dispatcher
     {
@@ -93,6 +98,15 @@ trait InstanceTrait
         $guard = is_null($guard) ? $this->config->get('auth.defaults.guard') : $guard;
 
         return $this->auth->guard($guard);
+    }
+
+    /**
+     *
+     * @return \Illuminate\Contracts\Auth\Authenticatable|null
+     */
+    public function user()
+    {
+        return $this->guard->user();
     }
 
     /**
