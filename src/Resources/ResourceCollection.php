@@ -2,10 +2,8 @@
 
 namespace CrCms\Foundation\Resources;
 
-use function Composer\Autoload\includeFile;
-use CrCms\Foundation\Resources\Concerns\IncludeConcern;
+use CrCms\Foundation\Resources\Concerns\SceneConcern;
 use Illuminate\Http\Request;
-use CrCms\Foundation\Resources\Concerns\FieldConcern;
 use Illuminate\Http\Resources\Json\ResourceCollection as BaseResourceCollection;
 
 /**
@@ -13,7 +11,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection as BaseResourceCollection;
  */
 class ResourceCollection extends BaseResourceCollection
 {
-    use FieldConcern, IncludeConcern;
+    use SceneConcern;
 
     /**
      * ResourceCollection constructor.
@@ -32,16 +30,6 @@ class ResourceCollection extends BaseResourceCollection
      */
     public function toArray($request): array
     {
-        return $this->collection->map(function (Resource $resource) use ($request) {
-            if ($this->includes) {
-                $resource->setIncludes($this->includes);
-            }
-
-            $resource = ($this->resourceType === 'scene' ?
-                $resource->{$this->resourceType}($this->scene) :
-                $resource->{$this->resourceType}($this->resourceFields));
-
-            return $resource->resolve($request);
-        })->all();
+        return $this->collection->map->scene($this->scene)->fields($this->fields)->toArray($request)->all();
     }
 }
