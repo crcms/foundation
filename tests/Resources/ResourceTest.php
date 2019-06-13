@@ -50,18 +50,18 @@ class ResourceTest extends TestCase
         $this->assertEquals($params,$result);
     }
 
-//    public function testCollectionFields()
-//    {
-//        $resource = new BaseCollection(
-//            Collection::make([
-//                ['f1' => '1', 'f2' => '2', 'f3' => 3, 'f4' => 'abc'],
-//                ['f1' => '11', 'f2' => '21', 'f3' => 31, 'f4' => 'abc1'],
-//            ])
-//        );
-//        $result = $resource->fields(['f4'])->resolve(\Mockery::mock(Request::class));
-//        dd($result);
-//
-//        $this->assertEquals(true, is_array($result));
-//        $this->assertEquals('f4', $result['f4']);
-//    }
+    public function testCollectionFields()
+    {
+        $resource = new BaseCollection(
+            Collection::make([
+                ['f1' => '1', 'f2' => '2', 'f3' => 3, 'f4' => 'abc'],
+                ['f1' => '11', 'f2' => '21', 'f3' => 31, 'f4' => 'abc1'],
+            ])
+        );
+        $result = $resource->fields(['f4'])->resolve(\Mockery::mock(Request::class));
+        dd($result);
+
+        $this->assertEquals(true, is_array($result));
+        $this->assertEquals('f4', $result['f4']);
+    }
 }
