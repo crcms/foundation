@@ -2,6 +2,7 @@
 
 namespace CrCms\Foundation\Resources;
 
+use CrCms\Foundation\Resources\Concerns\WhenMakeConcern;
 use CrCms\Foundation\Resources\Concerns\SceneConcern;
 use CrCms\Foundation\Resources\Concerns\TypeConcern;
 use Illuminate\Support\Collection;
@@ -10,7 +11,7 @@ use Illuminate\Support\Str;
 
 class JsonResource extends BaseResource
 {
-    use SceneConcern, TypeConcern;
+    use SceneConcern, TypeConcern, WhenMakeConcern;
 
     /**
      * @param \Illuminate\Http\Request $request
@@ -72,5 +73,14 @@ class JsonResource extends BaseResource
                 $collection->preserveKeys = (new static([]))->preserveKeys === true;
             }
         });
+    }
+
+    /**
+     *
+     * @return null
+     */
+    protected static function emptyReturn()
+    {
+        return null;
     }
 }
