@@ -35,11 +35,14 @@ abstract class AbstractJob
     abstract protected function handle(array $data, Job $job): void;
 
     /**
-     * 当执行失败后执行此方法.
+     * 执行失败后执行此方法.
      *
      * @param array $data
      * @param Throwable $e
+     *
      * @return void
+     *
+     * @throws Throwable
      */
     public function failed(array $data, Throwable $e): void
     {
