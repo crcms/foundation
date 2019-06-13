@@ -19,7 +19,6 @@ trait WhenMakeConcern
     }
 
     /**
-     *
      * @return mixed
      */
     abstract protected static function emptyReturn();

@@ -9,8 +9,8 @@
 
 namespace CrCms\Foundation\Transporters;
 
-use CrCms\Foundation\Framework;
 use Illuminate\Http\Request;
+use CrCms\Foundation\Framework;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 use CrCms\Foundation\Transporters\Contracts\DataProviderContract;

@@ -2,12 +2,12 @@
 
 namespace CrCms\Foundation\Resources;
 
-use CrCms\Foundation\Resources\Concerns\WhenMakeConcern;
-use CrCms\Foundation\Resources\Concerns\SceneConcern;
-use CrCms\Foundation\Resources\Concerns\TypeConcern;
-use Illuminate\Support\Collection;
-use Illuminate\Http\Resources\Json\JsonResource as BaseResource;
 use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
+use CrCms\Foundation\Resources\Concerns\TypeConcern;
+use CrCms\Foundation\Resources\Concerns\SceneConcern;
+use CrCms\Foundation\Resources\Concerns\WhenMakeConcern;
+use Illuminate\Http\Resources\Json\JsonResource as BaseResource;
 
 class JsonResource extends BaseResource
 {
@@ -38,7 +38,7 @@ class JsonResource extends BaseResource
 
         return Collection::make($fields)->mapWithKeys(function ($field, $key) use ($request) {
             //alias
-            if (is_integer($key)) {
+            if (is_int($key)) {
                 $alias = $field;
             } else {
                 $alias = $field;
@@ -76,11 +76,9 @@ class JsonResource extends BaseResource
     }
 
     /**
-     *
      * @return null
      */
     protected static function emptyReturn()
     {
-        return null;
     }
 }

@@ -116,7 +116,6 @@ abstract class AbstractModuleServiceProvider extends ServiceProvider
     }
 
     /**
-     *
      * @return bool
      *
      * @throws \Illuminate\Contracts\Container\BindingResolutionException

@@ -2,9 +2,9 @@
 
 namespace CrCms\Foundation\Resources;
 
-use CrCms\Foundation\Resources\Concerns\WhenMakeConcern;
-use CrCms\Foundation\Resources\Concerns\SceneConcern;
 use Illuminate\Http\Request;
+use CrCms\Foundation\Resources\Concerns\SceneConcern;
+use CrCms\Foundation\Resources\Concerns\WhenMakeConcern;
 use Illuminate\Http\Resources\Json\ResourceCollection as BaseResourceCollection;
 
 /**
@@ -35,7 +35,6 @@ class ResourceCollection extends BaseResourceCollection
     }
 
     /**
-     *
      * @return array
      */
     protected static function emptyReturn(): array
