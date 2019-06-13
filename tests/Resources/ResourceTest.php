@@ -3,7 +3,6 @@
 namespace CrCms\Foundation\Tests\Resources;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use PHPUnit\Framework\TestCase;
 
 class ResourceTest extends TestCase
@@ -47,7 +46,7 @@ class ResourceTest extends TestCase
     {
         $params = null;
         $result = BaseResource::whenMake($params);
-        $this->assertEquals($params,$result);
+        $this->assertEquals($params, $result);
     }
 
 //    public function testCollectionFields()

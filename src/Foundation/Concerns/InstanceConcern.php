@@ -9,6 +9,8 @@
 
 namespace CrCms\Foundation\Foundation\Concerns;
 
+use Illuminate\Support\Str;
+use InvalidArgumentException;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Bus\Dispatcher;
@@ -18,8 +20,6 @@ use Illuminate\Contracts\Cache\Repository as Cache;
 use Illuminate\Contracts\Auth\Factory as AuthFactory;
 use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Contracts\Events\Dispatcher as EventDispatcher;
-use Illuminate\Support\Str;
-use InvalidArgumentException;
 
 /**
  * @property-read Container|Application $app
@@ -101,7 +101,6 @@ trait InstanceConcern
     }
 
     /**
-     *
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */
     public function user()

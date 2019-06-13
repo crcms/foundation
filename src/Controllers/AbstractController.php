@@ -72,5 +72,3 @@ if (class_exists(\Laravel\Lumen\Routing\Controller::class)) {
         }
     }
 }
-
-

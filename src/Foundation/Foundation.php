@@ -20,7 +20,6 @@ class Foundation
     }
 
     /**
-     *
      * @return bool
      */
     public function isLumen(): bool
@@ -29,7 +28,6 @@ class Foundation
     }
 
     /**
-     *
      * @return bool
      */
     public function isLaravel(): bool

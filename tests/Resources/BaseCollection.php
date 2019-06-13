@@ -6,5 +6,4 @@ use CrCms\Foundation\Resources\ResourceCollection;
 
 class BaseCollection extends ResourceCollection
 {
-
 }

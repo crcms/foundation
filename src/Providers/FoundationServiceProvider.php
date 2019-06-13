@@ -2,8 +2,8 @@
 
 namespace CrCms\Foundation\Providers;
 
-use CrCms\Foundation\Foundation\Foundation;
 use Illuminate\Database\Schema\Blueprint;
+use CrCms\Foundation\Foundation\Foundation;
 use CrCms\Foundation\Commands\RuleMakeCommand;
 use CrCms\Foundation\Commands\TaskMakeCommand;
 use CrCms\Foundation\Commands\ModelMakeCommand;
@@ -44,7 +44,6 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
     }
 
     /**
-     *
      * @return void
      *
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
@@ -63,7 +62,6 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
     }
 
     /**
-     *
      * @return void
      */
     protected function registerAlias(): void
