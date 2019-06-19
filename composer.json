@@ -30,7 +30,8 @@
         "ext-json": "*",
         "illuminate/container": "^5.8",
         "illuminate/support": "^5.8",
-        "illuminate/console": "^5.8"
+        "illuminate/console": "^5.8",
+        "myclabs/php-enum": "^1.7"
     },
     "require-dev": {
         "codedungeon/phpunit-result-printer": "^0.26.2",
