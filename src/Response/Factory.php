@@ -9,8 +9,9 @@ use Illuminate\Http\Response;
 use InvalidArgumentException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
-use CrCms\Foundation\Resources\Resource;
-use CrCms\Foundation\Resources\ResourceCollection;
+//use CrCms\Foundation\Resources\Resource;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Contracts\Routing\ResponseFactory as FactoryContract;
 use Laravel\Lumen\Http\ResponseFactory as LumenResponseFactory;
@@ -30,7 +31,7 @@ class Factory
      */
     public function setFactory($factory)
     {
-        if ((!$factory instanceof FactoryContract) && (!$factory instanceof LumenResponseFactory)) {
+        if ((! $factory instanceof FactoryContract) && (! $factory instanceof LumenResponseFactory)) {
             throw new DomainException("The factory not allow");
         }
 
@@ -118,11 +119,11 @@ class Factory
      */
     public function resource($resource, string $collect = '', array $fields = [], array $includes = []): JsonResponse
     {
-        if (! $resource instanceof Resource && class_exists($collect)) {
+        if (! $resource instanceof JsonResource && class_exists($collect)) {
             $resource = (new $collect($resource));
         }
 
-        if (! $resource instanceof Resource) {
+        if (! $resource instanceof JsonResource) {
             throw new InvalidArgumentException('Non-existent resource converter');
         }
 
@@ -286,7 +287,11 @@ class Factory
             $type = 'except';
         }
 
-        return $resource->$type($fields)->response();
+        if (method_exists($resource, $type)) {
+            $resource = $resource->$type($fields);
+        }
+
+        return $resource->response();
     }
 
     /**
