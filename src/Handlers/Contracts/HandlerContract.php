@@ -10,5 +10,5 @@ interface HandlerContract
      * @param DataProviderContract $provider
      * @return mixed
      */
-    public function handle(DataProviderContract $provider);
+    //public function handle(DataProviderContract $provider);
 }

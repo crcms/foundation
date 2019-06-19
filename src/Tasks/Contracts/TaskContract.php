@@ -8,5 +8,5 @@ interface TaskContract
      * @param mixed ...$params
      * @return mixed
      */
-    public function handle(...$params);
+    //public function handle(...$params);
 }
