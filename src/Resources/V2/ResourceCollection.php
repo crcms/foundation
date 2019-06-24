@@ -31,7 +31,9 @@ class ResourceCollection extends BaseResourceCollection
      */
     public function toArray($request): array
     {
-        return $this->collection->map->scene($this->scene)->fields($this->fields)->toArray($request)->all();
+        return $this->collection->map(function($item){
+            return $item->scene($this->scene)->fields($this->fields);
+        })->toArray($request);
     }
 
     /**

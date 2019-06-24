@@ -24,7 +24,7 @@ trait SceneConcern
      *
      * @return SceneConcern
      */
-    public function scene(string $scene): self
+    public function scene(?string $scene): self
     {
         $this->scene = $scene;
 
