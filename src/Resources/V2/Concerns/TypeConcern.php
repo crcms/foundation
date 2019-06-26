@@ -9,31 +9,6 @@ trait TypeConcern
      */
     protected $casts = [];
 
-//    /**
-//     * @var bool
-//     */
-//    protected $numericCastString = true;
-//
-//    /**
-//     * @return bool
-//     */
-//    public function getNumericCastString(): bool
-//    {
-//        return $this->numericCastString;
-//    }
-//
-//    /**
-//     * @param bool $numericCastString
-//     *
-//     * @return TypeConcern
-//     */
-//    public function setNumericCastString(bool $numericCastString): self
-//    {
-//        $this->numericCastString = $numericCastString;
-//
-//        return $this;
-//    }
-
     /**
      * @param $value
      * @param string $field
@@ -59,10 +34,6 @@ trait TypeConcern
      */
     protected function cast(string $type, $value)
     {
-//        if ($this->numericCastString && is_numeric($value)) {
-//            return strval($value);
-//        }
-
         switch ($type) {
             case 'int':
             case 'integer':
@@ -80,7 +51,7 @@ trait TypeConcern
             case 'bool':
                 return boolval($value);
             default:
-                return strval($value);
+                return $value;
         }
     }
 }
