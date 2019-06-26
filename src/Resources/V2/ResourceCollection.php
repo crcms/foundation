@@ -32,7 +32,13 @@ class ResourceCollection extends BaseResourceCollection
     public function toArray($request): array
     {
         return $this->collection->map(function($item){
-            return $item->scene($this->scene)->fields($this->fields);
+            if ($this->scene) {
+                $item->scene($this->scene);
+            }
+            if ($this->fields) {
+                $item->fields($this->fields);
+            }
+            return $item;
         })->toArray($request);
     }
 
