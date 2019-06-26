@@ -6,12 +6,11 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use CrCms\Foundation\Resources\V2\Concerns\TypeConcern;
 use CrCms\Foundation\Resources\V2\Concerns\SceneConcern;
-use CrCms\Foundation\Resources\V2\Concerns\WhenMakeConcern;
 use Illuminate\Http\Resources\Json\JsonResource as BaseResource;
 
 class JsonResource extends BaseResource
 {
-    use SceneConcern, TypeConcern, WhenMakeConcern;
+    use SceneConcern, TypeConcern;
 
     /**
      * @param \Illuminate\Http\Request $request
@@ -84,10 +83,16 @@ class JsonResource extends BaseResource
     }
 
     /**
-     * @return null
+     * @param mixed ...$parameters
+     *
+     * @return \Illuminate\Http\Resources\Json\JsonResource|null
      */
-    protected static function emptyReturn()
+    public static function whenMake(...$parameters)
     {
-        return null;
+        if (empty($parameters) || empty($parameters[0])) {
+            return null;
+        }
+
+        return static::make(...$parameters);
     }
 }

@@ -4,7 +4,6 @@ namespace CrCms\Foundation\Resources\V2;
 
 use Illuminate\Http\Request;
 use CrCms\Foundation\Resources\V2\Concerns\SceneConcern;
-use CrCms\Foundation\Resources\V2\Concerns\WhenMakeConcern;
 use Illuminate\Http\Resources\Json\ResourceCollection as BaseResourceCollection;
 
 /**
@@ -12,7 +11,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection as BaseResourceCollection;
  */
 class ResourceCollection extends BaseResourceCollection
 {
-    use SceneConcern, WhenMakeConcern;
+    use SceneConcern;
 
     /**
      * ResourceCollection constructor.
@@ -40,13 +39,5 @@ class ResourceCollection extends BaseResourceCollection
             }
             return $item;
         })->toArray($request);
-    }
-
-    /**
-     * @return array
-     */
-    protected static function emptyReturn(): array
-    {
-        return [];
     }
 }
