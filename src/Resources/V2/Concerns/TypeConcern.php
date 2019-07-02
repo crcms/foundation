@@ -2,6 +2,8 @@
 
 namespace CrCms\Foundation\Resources\V2\Concerns;
 
+use Illuminate\Support\Carbon;
+
 trait TypeConcern
 {
     /**
@@ -46,10 +48,22 @@ trait TypeConcern
                 return floatval($value);
             case 'json':
             case 'array':
-                return (array) $value;
+                return (array)$value;
             case 'boolean':
             case 'bool':
                 return boolval($value);
+            case (stripos($type, 'date') !== false):
+                $types = explode(':', $type);
+                $format = isset($types[1]) ? $types[1] : 'Y-m-d H:i:s';
+                if ($value instanceof Carbon) {
+                    return $value->rawFormat($format);
+                } elseif ($value instanceof \DateTimeInterface) {
+                    return $value->format($format);
+                } elseif (is_numeric($value)) {
+                    return date($format, $value);
+                } else {
+                    return $value;
+                }
             default:
                 return $value;
         }
