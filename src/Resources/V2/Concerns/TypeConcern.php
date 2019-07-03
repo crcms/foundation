@@ -36,6 +36,20 @@ trait TypeConcern
      */
     protected function cast(string $type, $value)
     {
+        if (stripos($type, 'date') !== false) {
+            $types = explode(':', $type);
+            $format = isset($types[1]) ? $types[1] : 'Y-m-d H:i:s';
+            if ($value instanceof Carbon) {
+                return $value->rawFormat($format);
+            } elseif ($value instanceof \DateTimeInterface) {
+                return $value->format($format);
+            } elseif (is_numeric($value)) {
+                return date($format, $value);
+            } else {
+                return $value;
+            }
+        }
+
         switch ($type) {
             case 'int':
             case 'integer':
@@ -52,18 +66,6 @@ trait TypeConcern
             case 'boolean':
             case 'bool':
                 return boolval($value);
-            case (stripos($type, 'date') !== false):
-                $types = explode(':', $type);
-                $format = isset($types[1]) ? $types[1] : 'Y-m-d H:i:s';
-                if ($value instanceof Carbon) {
-                    return $value->rawFormat($format);
-                } elseif ($value instanceof \DateTimeInterface) {
-                    return $value->format($format);
-                } elseif (is_numeric($value)) {
-                    return date($format, $value);
-                } else {
-                    return $value;
-                }
             default:
                 return $value;
         }
