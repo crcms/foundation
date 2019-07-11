@@ -19,6 +19,9 @@ trait BaseRestTrait
      */
     public function index(): JsonResponse
     {
+        $provider = $this->dataProvider();
+        $provider->scenes($this->currentScene('index', 'validate'))->validateResolved();
+
         try {
             $resources = $this->logic()->paginateForManagement();
         } catch (\Exception $e) {
@@ -28,6 +31,7 @@ trait BaseRestTrait
         return $this->response->paginator(
             $resources,
             SpikeResource::class,
+            $this->currentScene('index', 'resource')
             );
     }
 
@@ -115,7 +119,7 @@ trait BaseRestTrait
     protected function currentScene(string $scene, ?string $type = null): string
     {
         if (! isset($this->scenes[$scene])) {
-            throw new \OutOfRangeException("The scene [$scene] not found");
+            return '';
         }
 
         $types = $this->scenes[$scene];
