@@ -12,6 +12,7 @@ namespace CrCms\Foundation\Transporters;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 use CrCms\Foundation\Transporters\Concerns\ValidateConcern;
 use Illuminate\Support\Arr;
+use Illuminate\Contracts\Validation\Factory;
 
 /**
  * Class AbstractValidateDataProvider.
@@ -19,7 +20,7 @@ use Illuminate\Support\Arr;
 abstract class AbstractValidateDataProvider extends AbstractDataProvider implements ValidatesWhenResolved
 {
     use ValidateConcern {
-        validateResolved as validateConcernValidateResolved;
+        //validateResolved as validateConcernValidateResolved;
     }
 
     /**
@@ -44,24 +45,18 @@ abstract class AbstractValidateDataProvider extends AbstractDataProvider impleme
     }
 
     /**
-     *
-     * @return void
-     */
-    public function validateResolved()
-    {
-        if ($this->isAutoValidate) {
-            $this->validateConcernValidateResolved();
-        }
-    }
-
-    /**
      * @param Factory $factory
      *
      * @return mixed
      */
     protected function validator(Factory $factory)
     {
-        $rules = $this->app()->call([$this, 'rules']);
+        // 自动验证，则开启之前的默认验证走，rules方法
+        if ($this->isAutoValidate) {
+            return $this->createDefaultValidator($factory);
+        }
+
+        $rules = $this->app()->call([$this, 'sceneRules']);
 
         if (! empty($this->scenes)) {
             $rules = array_reduce(\Illuminate\Support\Arr::only($rules, $this->scenes), 'array_merge', []);
