@@ -3,8 +3,10 @@
 namespace CrCms\Foundation\Controllers;
 
 use CrCms\Foundation\Logic\AbstractLogic;
+use CrCms\Foundation\Resources\Resource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Arr;
 
 trait BaseRestTrait
 {
@@ -20,7 +22,7 @@ trait BaseRestTrait
     public function index(): JsonResponse
     {
         $provider = $this->dataProvider();
-        $provider->scenes($this->currentScene('index', 'validate'))->validateResolved();
+        $provider->scenes(Arr::get($this->scenes, 'index.validate'))->validateResolved();
 
         try {
             $resources = $this->logic()->paginateForManagement();
@@ -30,9 +32,9 @@ trait BaseRestTrait
 
         return $this->response->paginator(
             $resources,
-            SpikeResource::class,
-            $this->currentScene('index', 'resource')
-            );
+            $this->resource(),
+            ['scene' => Arr::get($this->scenes, 'index.resource')]
+        );
     }
 
     /**
@@ -43,7 +45,7 @@ trait BaseRestTrait
     public function store(): JsonResponse
     {
         $provider = $this->dataProvider();
-        $provider->scenes($this->currentScene('store', 'validate'))->validateResolved();
+        $provider->scenes(Arr::get($this->scenes, 'store.validate'))->validateResolved();
 
         try {
             $resource = $this->logic()->store($provider);
@@ -53,8 +55,8 @@ trait BaseRestTrait
 
         return $this->response->resource(
             $resource,
-            SpikeResource::class,
-            $this->currentScene('store', 'resource')
+            $this->resource(),
+            ['scene' => Arr::get($this->scenes, 'store.resource')]
         );
     }
 
@@ -66,7 +68,7 @@ trait BaseRestTrait
     public function update($id)
     {
         $provider = $this->dataProvider();
-        $provider->scenes($this->currentScene('update', 'validate'))->validateResolved();
+        $provider->scenes(Arr::get($this->scenes, 'update.validate'))->validateResolved();
 
         try {
             $resource = $this->logic()->update($provider, $id);
@@ -76,8 +78,8 @@ trait BaseRestTrait
 
         return $this->response->resource(
             $resource,
-            SpikeResource::class,
-            $this->currentScene('update', 'resource')
+            $this->resource(),
+            ['scene' => Arr::get($this->scenes, 'update.resource')]
         );
     }
 
@@ -87,7 +89,7 @@ trait BaseRestTrait
     public function destroy($id): Response
     {
         $provider = $this->dataProvider();
-        $provider->scenes($this->currentScene('destroy', 'validate'))->validateResolved();
+        $provider->scenes(Arr::get($this->scenes, 'destroy.validate'))->validateResolved();
 
         try {
             $row = $this->logic()->destroy($id);
@@ -111,24 +113,8 @@ trait BaseRestTrait
     abstract protected function dataProvider(): ValidatesWhenResolved;
 
     /**
-     * @param string $scene
-     * @param string|null $type
      *
-     * @return string
+     * @return string|Resource
      */
-    protected function currentScene(string $scene, ?string $type = null): string
-    {
-        if (! isset($this->scenes[$scene])) {
-            return '';
-        }
-
-        $types = $this->scenes[$scene];
-        if (is_array($types) && isset($types[$type])) {
-            return $types[$type];
-        } else if (is_string($types)) {
-            return $types;
-        } else {
-            throw new \OutOfRangeException("The scene type [$type] not found");
-        }
-    }
+    abstract protected function resource();
 }
