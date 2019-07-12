@@ -25,6 +25,11 @@ class DataServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->afterResolving(ValidatesWhenResolved::class, function ($resolved) {
+            if ($resolved instanceof AbstractValidateDataProvider && $resolved->isAutoValidate) {
+                $resolved->validateResolved();
+                return;
+            }
+
             $resolved->validateResolved();
         });
 

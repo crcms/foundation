@@ -30,7 +30,7 @@ abstract class AbstractValidateDataProvider extends AbstractDataProvider impleme
     /**
      * @var bool
      */
-    protected $isAutoValidate = true;
+    public $isAutoValidate = true;
 
     /**
      * @param $scene
