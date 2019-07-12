@@ -14,7 +14,7 @@ trait BaseRestTrait
     /**
      * @var array
      */
-    protected $scenes = [];
+    //protected $scenes = [];
 
     /**
      *
@@ -23,6 +23,7 @@ trait BaseRestTrait
     public function index(): JsonResponse
     {
         $provider = $this->dataProvider();
+
         $provider->scenes(Arr::get($this->scenes, 'index.validate'))->validateResolved();
 
         try {

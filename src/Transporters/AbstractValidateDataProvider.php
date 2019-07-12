@@ -49,7 +49,7 @@ abstract class AbstractValidateDataProvider extends AbstractDataProvider impleme
      *
      * @return mixed
      */
-    protected function validator(Factory $factory)
+    public function validator(Factory $factory)
     {
         // 自动验证，则开启之前的默认验证走，rules方法
         if ($this->isAutoValidate) {
@@ -59,14 +59,9 @@ abstract class AbstractValidateDataProvider extends AbstractDataProvider impleme
         $rules = $this->app()->call([$this, 'sceneRules']);
 
         if (! empty($this->scenes)) {
-            $rules = array_reduce(\Illuminate\Support\Arr::only($rules, $this->scenes), 'array_merge', []);
+            $rules = array_reduce(Arr::only($rules, $this->scenes), 'array_merge', []);
         } else {
-            // 如果为空则表示全部是scene,
-            // 需要取下一层
-            $rules = Arr::only($rules, array_keys($this->all()));
-            if (empty($rules)) {
-                $rules = array_reduce($rules, 'array_merge', []);
-            }
+            $rules = [];
         }
 
         return $factory->make(
