@@ -4,6 +4,7 @@ namespace CrCms\Foundation\Controllers;
 
 use CrCms\Foundation\Logic\AbstractLogic;
 use CrCms\Foundation\Resources\Resource;
+use CrCms\Foundation\Transporters\Contracts\DataProviderContract;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
@@ -25,7 +26,7 @@ trait BaseRestTrait
         $provider->scenes(Arr::get($this->scenes, 'index.validate'))->validateResolved();
 
         try {
-            $resources = $this->logic()->paginateForManagement();
+            $resources = $this->logic()->paginateForManagement($provider);
         } catch (\Exception $e) {
             $this->response->errorBadRequest($e->getMessage());
         }
@@ -48,7 +49,7 @@ trait BaseRestTrait
         $provider->scenes(Arr::get($this->scenes, 'show.validate'))->validateResolved();
 
         try {
-            $resource = $this->logic()->show($id);
+            $resource = $this->logic()->show($provider, $id);
         } catch (\Exception $e) {
             $this->response->errorBadRequest($e->getMessage());
         }
@@ -115,7 +116,7 @@ trait BaseRestTrait
         $provider->scenes(Arr::get($this->scenes, 'destroy.validate'))->validateResolved();
 
         try {
-            $row = $this->logic()->destroy($id);
+            $row = $this->logic()->destroy($provider, $id);
         } catch (\Exception $e) {
             $this->response->errorBadRequest($e->getMessage());
         }
