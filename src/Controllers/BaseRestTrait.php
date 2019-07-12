@@ -38,6 +38,29 @@ trait BaseRestTrait
     }
 
     /**
+     * @param $id
+     *
+     * @return JsonResponse
+     */
+    public function show($id): JsonResponse
+    {
+        $provider = $this->dataProvider();
+        $provider->scenes(Arr::get($this->scenes, 'show.validate'))->validateResolved();
+
+        try {
+            $resource = $this->logic()->show($id);
+        } catch (\Exception $e) {
+            $this->response->errorBadRequest($e->getMessage());
+        }
+
+        return $this->response->resource(
+            $resource,
+            $this->resource(),
+            ['scene' => Arr::get($this->scenes, 'show.resource')]
+        );
+    }
+
+    /**
      * @param DataProviderContract $provider
      *
      * @return \Illuminate\Http\JsonResponse
