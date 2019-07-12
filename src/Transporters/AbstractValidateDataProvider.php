@@ -74,4 +74,13 @@ abstract class AbstractValidateDataProvider extends AbstractDataProvider impleme
             $this->messages(), $this->attributes()
         );
     }
+
+    /**
+     *
+     * @return array
+     */
+    public function sceneRules(): array
+    {
+        return [];
+    }
 }
