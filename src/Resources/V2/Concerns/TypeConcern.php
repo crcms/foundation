@@ -62,7 +62,7 @@ trait TypeConcern
                 return floatval($value);
             case 'json':
             case 'array':
-                return (array)$value;
+                return (array) $value;
             case 'boolean':
             case 'bool':
                 return boolval($value);

@@ -30,7 +30,7 @@ class JsonResource extends BaseResource
                 : $this->resource->toArray();
         }
 
-        return $this->resolveFields($request,$fields);
+        return $this->resolveFields($request, $fields);
     }
 
     /**
@@ -90,7 +90,7 @@ class JsonResource extends BaseResource
     public static function whenMake(...$parameters)
     {
         if (empty($parameters) || empty($parameters[0])) {
-            return null;
+            return;
         }
 
         return static::make(...$parameters);

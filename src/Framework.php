@@ -5,7 +5,6 @@ namespace CrCms\Foundation;
 class Framework
 {
     /**
-     *
      * @return bool
      */
     public static function isLumen(): bool
@@ -14,7 +13,6 @@ class Framework
     }
 
     /**
-     *
      * @return bool
      */
     public static function isLaravel(): bool
