@@ -33,12 +33,12 @@ class FoundationServiceProvider extends AbstractModuleServiceProvider
      */
     public function boot(): void
     {
-        if (method_exists($this,'configPath')) {
+        if (method_exists($this, 'configPath')) {
             $this->publishes([
                 $this->basePath('config/config.php') => $this->app->configPath("{$this->name}.php"),
             ]);
         }
-        
+
         $this->extendCommands();
     }
 

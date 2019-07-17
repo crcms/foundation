@@ -6,7 +6,7 @@ use CrCms\Foundation\Transporters\Contracts\DataProviderContract;
 
 interface HandlerContract
 {
-    /**
+    /*
      * @param DataProviderContract $provider
      * @return mixed
      */

@@ -9,10 +9,10 @@
 
 namespace CrCms\Foundation\Transporters;
 
-use Illuminate\Contracts\Validation\ValidatesWhenResolved;
-use CrCms\Foundation\Transporters\Concerns\ValidateConcern;
 use Illuminate\Support\Arr;
 use Illuminate\Contracts\Validation\Factory;
+use Illuminate\Contracts\Validation\ValidatesWhenResolved;
+use CrCms\Foundation\Transporters\Concerns\ValidateConcern;
 
 /**
  * Class AbstractValidateDataProvider.
@@ -40,7 +40,8 @@ abstract class AbstractValidateDataProvider extends AbstractDataProvider impleme
      */
     public function scenes($scene): self
     {
-        $this->scenes = (array)$scene;
+        $this->scenes = (array) $scene;
+
         return $this;
     }
 
@@ -71,7 +72,6 @@ abstract class AbstractValidateDataProvider extends AbstractDataProvider impleme
     }
 
     /**
-     *
      * @return array
      */
     public function sceneRules(): array

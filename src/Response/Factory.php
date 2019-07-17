@@ -3,19 +3,19 @@
 namespace CrCms\Foundation\Response;
 
 use Traversable;
+use DomainException;
 use JsonSerializable;
 use BadMethodCallException;
 use Illuminate\Http\Response;
 use InvalidArgumentException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Collection;
 //use CrCms\Foundation\Resources\Resource;
+use Illuminate\Support\Collection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Illuminate\Contracts\Routing\ResponseFactory as FactoryContract;
 use Laravel\Lumen\Http\ResponseFactory as LumenResponseFactory;
-use DomainException;
+use Illuminate\Contracts\Routing\ResponseFactory as FactoryContract;
 
 class Factory
 {
@@ -32,7 +32,7 @@ class Factory
     public function setFactory($factory)
     {
         if ((! $factory instanceof FactoryContract) && (! $factory instanceof LumenResponseFactory)) {
-            throw new DomainException("The factory not allow");
+            throw new DomainException('The factory not allow');
         }
 
         $this->factory = $factory;

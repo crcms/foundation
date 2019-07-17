@@ -2,12 +2,12 @@
 
 namespace CrCms\Foundation\Controllers;
 
-use CrCms\Foundation\Logic\AbstractLogic;
-use CrCms\Foundation\Resources\Resource;
-use CrCms\Foundation\Transporters\Contracts\DataProviderContract;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
+use CrCms\Foundation\Resources\Resource;
+use CrCms\Foundation\Logic\AbstractLogic;
+use CrCms\Foundation\Transporters\Contracts\DataProviderContract;
 
 trait BaseRestTrait
 {
@@ -17,7 +17,6 @@ trait BaseRestTrait
     //protected $scenes = [];
 
     /**
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(): JsonResponse
@@ -126,20 +125,17 @@ trait BaseRestTrait
     }
 
     /**
-     *
      * @return AbstractLogic
      */
     abstract protected function logic();
 
     /**
-     *
      * @return ValidatesWhenResolved
      */
     abstract protected function dataProvider(): ValidatesWhenResolved;
 
     /**
-     *
-     * @return string|Resource
+     * @return string|resource
      */
     abstract protected function resource();
 }
