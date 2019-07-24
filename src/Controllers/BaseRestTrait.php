@@ -2,9 +2,9 @@
 
 namespace CrCms\Foundation\Controllers;
 
-use CrCms\Foundation\Exceptions\AppException;
-use CrCms\Foundation\Logic\AbstractLogic;
 use CrCms\Foundation\Resources\Resource;
+use CrCms\Foundation\Logic\AbstractLogic;
+use CrCms\Foundation\Exceptions\AppException;
 use CrCms\Foundation\Transporters\Contracts\DataProviderContract;
 
 trait BaseRestTrait
