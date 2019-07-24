@@ -2,9 +2,9 @@
 
 namespace CrCms\Foundation\Controllers;
 
-use CrCms\Foundation\Resources\Resource;
 use CrCms\Foundation\Logic\AbstractLogic;
 use CrCms\Foundation\Exceptions\AppException;
+use CrCms\Foundation\Resources\V2\JsonResource;
 use CrCms\Foundation\Transporters\Contracts\DataProviderContract;
 
 trait BaseRestTrait
@@ -133,7 +133,7 @@ trait BaseRestTrait
     abstract protected function dataProvider(): ValidatesWhenResolved;
 
     /**
-     * @return string|resource
+     * @return string|JsonResource
      */
     abstract protected function resource();
 }
