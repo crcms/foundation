@@ -2,11 +2,9 @@
 
 namespace CrCms\Foundation\Controllers;
 
-use Illuminate\Support\Arr;
-use Illuminate\Http\Response;
-use Illuminate\Http\JsonResponse;
-use CrCms\Foundation\Resources\Resource;
+use CrCms\Foundation\Exceptions\AppException;
 use CrCms\Foundation\Logic\AbstractLogic;
+use CrCms\Foundation\Resources\Resource;
 use CrCms\Foundation\Transporters\Contracts\DataProviderContract;
 
 trait BaseRestTrait
@@ -27,7 +25,7 @@ trait BaseRestTrait
 
         try {
             $resources = $this->logic()->paginateForManagement($provider);
-        } catch (\Exception $e) {
+        } catch (AppException $e) {
             $this->response->errorBadRequest($e->getMessage());
         }
 
@@ -50,7 +48,7 @@ trait BaseRestTrait
 
         try {
             $resource = $this->logic()->show($provider, $id);
-        } catch (\Exception $e) {
+        } catch (AppException $e) {
             $this->response->errorBadRequest($e->getMessage());
         }
 
@@ -73,7 +71,7 @@ trait BaseRestTrait
 
         try {
             $resource = $this->logic()->store($provider);
-        } catch (\Exception $e) {
+        } catch (AppException $e) {
             $this->response->errorBadRequest($e->getMessage());
         }
 
@@ -96,7 +94,7 @@ trait BaseRestTrait
 
         try {
             $resource = $this->logic()->update($provider, $id);
-        } catch (\Exception $e) {
+        } catch (AppException $e) {
             $this->response->errorBadRequest($e->getMessage());
         }
 
@@ -117,7 +115,7 @@ trait BaseRestTrait
 
         try {
             $row = $this->logic()->destroy($provider, $id);
-        } catch (\Exception $e) {
+        } catch (AppException $e) {
             $this->response->errorBadRequest($e->getMessage());
         }
 
