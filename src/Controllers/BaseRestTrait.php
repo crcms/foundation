@@ -6,6 +6,8 @@ use CrCms\Foundation\Logic\AbstractLogic;
 use CrCms\Foundation\Exceptions\AppException;
 use CrCms\Foundation\Resources\V2\JsonResource;
 use CrCms\Foundation\Transporters\Contracts\DataProviderContract;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Arr;
 
 trait BaseRestTrait
 {
