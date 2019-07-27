@@ -2,12 +2,12 @@
 
 namespace CrCms\Foundation\Controllers;
 
+use Illuminate\Support\Arr;
+use Illuminate\Http\JsonResponse;
 use CrCms\Foundation\Logic\AbstractLogic;
 use CrCms\Foundation\Exceptions\AppException;
 use CrCms\Foundation\Resources\V2\JsonResource;
 use CrCms\Foundation\Transporters\Contracts\DataProviderContract;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Arr;
 
 trait BaseRestTrait
 {
