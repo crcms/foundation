@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use CrCms\Foundation\Logic\AbstractLogic;
 use CrCms\Foundation\Exceptions\AppException;
 use CrCms\Foundation\Resources\V2\JsonResource;
+use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 use CrCms\Foundation\Transporters\Contracts\DataProviderContract;
 
 trait BaseRestTrait
