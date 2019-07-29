@@ -26,7 +26,7 @@ trait BaseRestTrait
         $provider->scenes(Arr::get($this->scenes, 'index.validate'))->validateResolved();
 
         try {
-            $resources = $this->logic()->paginateForManagement($provider);
+            $resources = $this->logic()->index($provider);
         } catch (AppException $e) {
             $this->response->errorBadRequest($e->getMessage());
         }
