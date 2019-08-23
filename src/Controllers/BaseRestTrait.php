@@ -4,6 +4,7 @@ namespace CrCms\Foundation\Controllers;
 
 use Illuminate\Support\Arr;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use CrCms\Foundation\Logic\AbstractLogic;
 use CrCms\Foundation\Exceptions\AppException;
 use CrCms\Foundation\Resources\V2\JsonResource;
